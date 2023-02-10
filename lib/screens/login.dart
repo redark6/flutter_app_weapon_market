@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:weapon_marketplace/models/sign_in.dart';
+import 'package:weapon_marketplace/screens/announce.dart';
 import 'package:weapon_marketplace/screens/home.dart';
 import 'package:weapon_marketplace/screens/signup.dart';
+import 'package:weapon_marketplace/services/auth_service.dart';
 import '../web_services/controllers/authentication_controller.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -16,8 +19,13 @@ class _LoginScreenState extends State<LoginScreen> {
   AuthenticationController authenticationController =
   AuthenticationController();
 
+  TextEditingController usernameEditingController = TextEditingController();
+  TextEditingController passwordEditingController = TextEditingController();
+
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isSecret = true;
+  final AuthService authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: TextStyle(color: Colors.black, fontSize: 15.0),
                         ),
                       ),
+
                       Form(
                         key: _formKey,
                         child: Column(
@@ -58,10 +67,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 35),
                                 child: TextFormField(
+                                  controller: usernameEditingController,
                                   cursorColor: Colors.deepOrange,
                                   decoration: InputDecoration(
-                                    prefixIcon: Icon(Icons.mail),
-                                    hintText: "Email",
+                                    prefixIcon: Icon(Icons.person),
+                                    hintText: "Nom d'utilisateur",
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(width: 1, color: Colors.black87),
                                       borderRadius: BorderRadius.circular(5.0),
@@ -87,6 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 35),
                                 child: TextFormField(
+                                  controller: passwordEditingController,
                                   obscureText: _isSecret,
                                   cursorColor: Colors.deepOrange,
                                   decoration: InputDecoration(
@@ -148,7 +159,43 @@ class _LoginScreenState extends State<LoginScreen> {
                           ],
                         ),
                       ),
-                      //const Spacer(),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.black87,
+                                ),
+                                onPressed: () {
+                                  authService.logIn(SignIn(username: usernameEditingController.text, password: passwordEditingController.text)).whenComplete(() =>
+                                  {
+                                    print("test"),
+
+                                    if(authService.isLoggedIn()) {
+                                      print("test"),
+                                      Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>AnnounceScreen()))
+                                    }
+                                  });
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 15,bottom: 15,left: 10, right: 10),
+                                  child: Row(
+                                    children: [
+                                      Text('Se connecter'),
+                                      Spacer(),
+                                      Icon(
+                                        Icons.arrow_forward_sharp,
+                                        color: Colors.deepOrange,
+                                        size: 25,
+                                      ),
+                                    ],
+                                  ),
+                                )
+                            ),
+                          )
+                        ],
+                      ),
+
                       Row(
                         children: [
                           Expanded(
