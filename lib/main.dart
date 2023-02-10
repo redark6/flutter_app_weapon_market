@@ -5,6 +5,7 @@ import 'package:weapon_marketplace/screens/announce.dart';
 import 'package:weapon_marketplace/screens/login.dart';
 import 'package:weapon_marketplace/services/auth_service.dart';
 import 'package:weapon_marketplace/services/http_override_localhost.dart';
+
 void main() {
   runApp(const MarketPlaceApp());
 }
@@ -16,22 +17,10 @@ class MarketPlaceApp extends StatelessWidget {
   Widget build(BuildContext context) {
     HttpOverrides.global = MyHttpOverrides();
 
-
-    final AuthService authService = AuthService();
-
-    if(authService.isLoggedIn() == false) {
-      return MaterialApp(
-        title: 'Connexion',
-        home:  LoginScreen(),
-        debugShowCheckedModeBanner: false,
-      );
-    } else {
-      return MaterialApp(
-        title: 'Accueil',
-        home:  AnnounceScreen(),
-        debugShowCheckedModeBanner: false,
-      );
-    }
-
+    return MaterialApp(
+      title: 'Connexion',
+      home: LoginScreen(),
+      debugShowCheckedModeBanner: false,
+    );
   }
 }

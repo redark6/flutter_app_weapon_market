@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:weapon_marketplace/screens/home.dart';
 import 'package:weapon_marketplace/screens/signup.dart';
+import '../models/announce.dart';
 import '../web_services/controllers/authentication_controller.dart';
 
 class AnnounceScreen extends StatefulWidget {
-  AnnounceScreen({
-    Key? key,
+  final Announce announce;
+  const AnnounceScreen({
+    Key? key, required this.announce,
   }) : super(key: key);
 
   @override
@@ -22,7 +24,7 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
           backgroundColor: Colors.black87,
           automaticallyImplyLeading: false,
           leading: IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back_sharp,
               size: 30,
             ),

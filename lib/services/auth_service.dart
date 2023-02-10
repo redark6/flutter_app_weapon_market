@@ -25,8 +25,7 @@ class AuthService {
       users.add(user);
     }
 
-    User loggedUser =
-    users.firstWhere((user) => user.username == username);
+    User loggedUser = users.firstWhere((user) => user.username == username);
     setCurrentUser(loggedUser);
     return loggedUser;
   }
@@ -43,11 +42,6 @@ class AuthService {
   }
 
   Future<http.Response> logIn(SignIn user) async {
-    print("${apiUrl}login");
-    print("aie");
-    print(user.username);
-    print(user.password);
-
     var response = await http.post(
       Uri.parse("${apiUrl}login"),
       headers: <String, String>{
@@ -58,6 +52,17 @@ class AuthService {
         'password': user.password
       }),
     );
+
+    if(response.statusCode == 200) {
+      String source = response.headers['set-cookie'].toString();
+      int start = source.indexOf("JSESSIONID=") + "JSESSIONID=".length;
+      int end = source.indexOf(";", start);
+      String extracted = source.substring(start, end);
+      SecureStorageService.getInstance().set("token", extracted);
+    }
+
+
+
     await getLoggedUser(user.username);
     return response;
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:weapon_marketplace/models/sign_up.dart';
 import 'package:weapon_marketplace/screens/announce.dart';
 import 'package:weapon_marketplace/screens/home.dart';
+import 'package:weapon_marketplace/services/announce_service.dart';
 import '../models/user.dart';
 import '../services/auth_service.dart';
 import '../web_services/controllers/authentication_controller.dart';
@@ -25,6 +26,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final AuthService authService = AuthService();
+  final AnnounceService announceService = AnnounceService();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,7 @@ class _SignupScreenState extends State<SignupScreen> {
             backgroundColor: Colors.black87,
             automaticallyImplyLeading: false,
             leading: IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_back_sharp,
                 size: 30,
               ),
@@ -172,15 +174,15 @@ class _SignupScreenState extends State<SignupScreen> {
                                   password: passwordEditingController.text, username: usernameEditingController.text)).then((value) =>
                                   {
                                     if(authService.isLoggedIn()) {
-                                      Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => AnnounceScreen()))
+                                      announceService.getAnnounce(7).then((value) => {
+                                        if(value != null){
+                                        Navigator.push(context,MaterialPageRoute(builder: (context) => AnnounceScreen(announce: value,)))
+                                      }})
                                     }
                                   });
 
                                 },
-                                child: Padding(
+                                child: const Padding(
                                     padding: const EdgeInsets.only(top: 15,bottom: 15,left: 10, right: 10),
                                     child: Text(
                                       'Créer mon compte',

@@ -4,6 +4,7 @@ import 'package:weapon_marketplace/screens/announce.dart';
 import 'package:weapon_marketplace/screens/home.dart';
 import 'package:weapon_marketplace/screens/signup.dart';
 import 'package:weapon_marketplace/services/auth_service.dart';
+import '../services/announce_service.dart';
 import '../web_services/controllers/authentication_controller.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -26,6 +27,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isSecret = true;
   final AuthService authService = AuthService();
+  final AnnounceService announceService = AnnounceService();
+
 
   @override
   Widget build(BuildContext context) {
@@ -169,11 +172,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                 onPressed: () {
                                   authService.logIn(SignIn(username: usernameEditingController.text, password: passwordEditingController.text)).whenComplete(() =>
                                   {
-                                    print("test"),
-
                                     if(authService.isLoggedIn()) {
-                                      print("test"),
-                                      Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>AnnounceScreen()))
+                                      announceService.getAnnounce(7).then((value) => {
+                                        if(value != null){
+                                          Navigator.push(context,MaterialPageRoute(builder: (context) => AnnounceScreen(announce: value,)))
+                                        }})
                                     }
                                   });
                                 },

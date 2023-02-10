@@ -7,7 +7,7 @@ class Announce {
   final String location;
   final int category;
   final String image;
-  final String price;
+  final int price;
 
   const Announce({
     required this.id,
@@ -29,7 +29,7 @@ class Announce {
       location: json['location'] as String? ?? '',
       category: json['profilePictureUrl'] as int? ?? 0,
       image: json['image'] as String? ?? '',
-      price: json['price'] as String? ?? '',
+      price: json['price'] as int? ?? 0
     );
   }
 
