@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 import 'package:http/http.dart' as http;
+import 'package:weapon_marketplace/models/sign_up.dart';
 import 'package:weapon_marketplace/services/secure_storage.dart';
 
 import '../models/sign_in.dart';
@@ -61,7 +62,7 @@ class AuthService {
     return response;
   }
 
-  Future<http.Response> register( User user) async {
+  Future<http.Response> register(SignUp user) async {
     final response = await http.post(
       Uri.parse(apiUrl + 'users/register'),
       headers: <String, String>{
@@ -73,6 +74,9 @@ class AuthService {
         'email': user.email,
       }),
     );
+    if(response.statusCode == 200){
+      await logIn(SignIn(username: user.username, password: user.password));
+    }
     return response;
   }
 
