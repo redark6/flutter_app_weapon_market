@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 class Announce {
 
   final int id;
@@ -6,8 +8,14 @@ class Announce {
   final String date;
   final String location;
   final int category;
+  //final Uint8List image;
   final String image;
   final int price;
+  final int userId;
+  final String email;
+  final String username;
+  //this.profilePictureUrl = user.getProfilePictureUrl();
+  final String phone;
 
   const Announce({
     required this.id,
@@ -18,6 +26,10 @@ class Announce {
     required this.category,
     required this.image,
     required this.price,
+    required this.userId,
+    required this.email,
+    required this.username,
+    required this.phone,
   });
 
   factory Announce.fromJson(Map<String, dynamic> json) {
@@ -29,7 +41,12 @@ class Announce {
       location: json['location'] as String? ?? '',
       category: json['profilePictureUrl'] as int? ?? 0,
       image: json['image'] as String? ?? '',
-      price: json['price'] as int? ?? 0
+     // image: json['image'] as Uint8List? ?? Uint8List.fromList([]),
+      price: json['price'] as int? ?? 0,
+      userId: json['userId'] as int? ?? 0,
+      email: json['email'] as String? ?? '',
+      username: json['username'] as String? ?? '',
+      phone: json['phone'] as String? ?? '',
     );
   }
 

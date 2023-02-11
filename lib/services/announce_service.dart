@@ -21,7 +21,7 @@ class AnnounceService {
         .get("token")
         .then((value) => token = value.toString());
     final response = await http.get(
-      Uri.parse(apiUrl + "announce/1"/* + announceId.toString()*/),
+      Uri.parse(apiUrl + "announce/" + announceId.toString()),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'cookie': token,
