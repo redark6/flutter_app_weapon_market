@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:full_screen_image_null_safe/full_screen_image_null_safe.dart';
 import 'package:weapon_marketplace/screens/signup.dart';
+import 'package:weapon_marketplace/services/date_service.dart';
 import '../models/announce.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -30,6 +31,7 @@ class AnnounceScreen extends StatefulWidget {
 }
 
 class _AnnounceScreenState extends State<AnnounceScreen> {
+  DateService dateService = DateService();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -96,11 +98,11 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
                   style: TextStyle(color: Colors.deepOrange, fontSize: 16.0,fontWeight: FontWeight.bold),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.only(top: 15),
+               Padding(
+                padding: const EdgeInsets.only(top: 15),
                 child: Text(
-                  'Aujourd\'hui à 18h30',
-                  style: TextStyle(color: Colors.black, fontSize: 16.0),
+                  dateService.formatDate(widget.announce.date),
+                  style: const TextStyle(color: Colors.black, fontSize: 16.0),
                 ),
               ),
               Padding(
