@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../services/auth_service.dart';
 import '../../web_services/controllers/authentication_controller.dart';
-import 'home.dart';
+import 'package:weapon_marketplace/models/sign_up.dart';
+import 'package:weapon_marketplace/services/announce_service.dart';
+
+import 'announce.dart';
 
 
 class SignupScreen extends StatefulWidget {
@@ -17,7 +21,13 @@ class _SignupScreenState extends State<SignupScreen> {
   AuthenticationController authenticationController =
   AuthenticationController();
 
+  TextEditingController usernameEditingController = TextEditingController();
+  TextEditingController passwordEditingController = TextEditingController();
+  TextEditingController emailEditingController = TextEditingController();
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final AuthService authService = AuthService();
+  final AnnounceService announceService = AnnounceService();
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +37,7 @@ class _SignupScreenState extends State<SignupScreen> {
             backgroundColor: Colors.black87,
             automaticallyImplyLeading: false,
             leading: IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_back_sharp,
                 size: 30,
               ),
@@ -62,6 +72,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 35),
                                 child: TextFormField(
+                                  controller: usernameEditingController,
                                   cursorColor: Colors.deepOrange,
                                   decoration: InputDecoration(
                                     prefixIcon: Icon(Icons.person),
@@ -91,6 +102,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 35),
                                 child: TextFormField(
+                                  controller: emailEditingController,
                                   cursorColor: Colors.deepOrange,
                                   decoration: InputDecoration(
                                     prefixIcon: Icon(Icons.mail),
@@ -120,6 +132,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 35),
                                 child: TextFormField(
+                                  controller: passwordEditingController,
                                   cursorColor: Colors.deepOrange,
                                   decoration: InputDecoration(
                                     prefixIcon: Icon(Icons.lock),
@@ -150,29 +163,39 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                       ),
                       //const Spacer(),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.black87,
-                                ),
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => HomeScreen()));
-                                },
-                                child: Padding(
-                                    padding: const EdgeInsets.only(top: 15,bottom: 15,left: 10, right: 10),
-                                    child: Text(
-                                      'Créer mon compte',
-                                      style: TextStyle(color: Colors.white, fontSize: 20.0),
-                                    )
-                                )
-                            ),
-                          )
-                        ],
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.black87,
+                                  ),
+                                  onPressed: () {
+                                    authService.register(SignUp(email: emailEditingController.text,
+                                    password: passwordEditingController.text, username: usernameEditingController.text)).then((value) =>
+                                    {
+                                      if(authService.isLoggedIn()) {
+                                        announceService.getAnnounce(7).then((value) => {
+                                          if(value != null){
+                                          Navigator.push(context,MaterialPageRoute(builder: (context) => AnnounceScreen(announce: value,)))
+                                        }})
+                                      }
+                                    });
+
+                                  },
+                                  child: const Padding(
+                                      padding: const EdgeInsets.only(top: 15,bottom: 15,left: 10, right: 10),
+                                      child: Text(
+                                        'Créer mon compte',
+                                        style: TextStyle(color: Colors.white, fontSize: 20.0),
+                                      )
+                                  )
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ],
                   ),

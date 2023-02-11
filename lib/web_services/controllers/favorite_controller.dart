@@ -18,7 +18,11 @@ class FavoriteController with ChangeNotifier {
         location: 'Quelque part',
         category: 1,
         image: 'https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg',
-        price: '20€',
+        price: 20,
+        userId: 1,
+        email: "truc@truc.fr",
+        username: "machin",
+        phone: "0654852136"
       );
     });
 

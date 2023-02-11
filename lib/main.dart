@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:weapon_marketplace/views/screens/main.dart';
+import 'package:weapon_marketplace/services/http_override_localhost.dart';
+import 'package:weapon_marketplace/views/screens/login.dart';
 
 
 void main() {
@@ -11,10 +14,11 @@ class MarketPlaceApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    HttpOverrides.global = MyHttpOverrides();
 
     return MaterialApp(
       title: 'Weaponry',
-      home: MainScreen(),
+      home: LoginScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

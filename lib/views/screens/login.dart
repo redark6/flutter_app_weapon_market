@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:weapon_marketplace/views/screens/signup.dart';
 
+import '../../services/announce_service.dart';
 import '../../web_services/controllers/authentication_controller.dart';
+import 'announce.dart';
 import 'home.dart';
+import 'package:weapon_marketplace/models/sign_in.dart';
+import 'package:weapon_marketplace/services/auth_service.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -18,8 +22,15 @@ class _LoginScreenState extends State<LoginScreen> {
   AuthenticationController authenticationController =
   AuthenticationController();
 
+  TextEditingController usernameEditingController = TextEditingController();
+  TextEditingController passwordEditingController = TextEditingController();
+
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isSecret = true;
+  final AuthService authService = AuthService();
+  final AnnounceService announceService = AnnounceService();
+
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: TextStyle(color: Colors.black, fontSize: 15.0),
                         ),
                       ),
+
                       Form(
                         key: _formKey,
                         child: Column(
@@ -60,10 +72,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 35),
                                 child: TextFormField(
+                                  controller: usernameEditingController,
                                   cursorColor: Colors.deepOrange,
                                   decoration: InputDecoration(
-                                    prefixIcon: Icon(Icons.mail),
-                                    hintText: "Email",
+                                    prefixIcon: Icon(Icons.person),
+                                    hintText: "Nom d'utilisateur",
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(width: 1, color: Colors.black87),
                                       borderRadius: BorderRadius.circular(5.0),
@@ -89,6 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 35),
                                 child: TextFormField(
+                                  controller: passwordEditingController,
                                   obscureText: _isSecret,
                                   cursorColor: Colors.deepOrange,
                                   decoration: InputDecoration(
@@ -126,61 +140,78 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 18),
+                        padding: const EdgeInsets.only(top: 15),
                         child: Row(
                           children: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => HomeScreen()));
-                              },
-                              child: Text(
-                                'mot de passe oublié',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black87,
-                                    decoration: TextDecoration.underline,
-                                  fontSize: 15
-                                ),
+                            Expanded(
+                              child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.black87,
+                                  ),
+                                  onPressed: () {
+                                    authService.logIn(SignIn(username: usernameEditingController.text, password: passwordEditingController.text)).whenComplete(() =>
+                                    {
+                                      if(authService.isLoggedIn()) {
+                                        announceService.getAnnounce(7).then((value) => {
+                                          if(value != null){
+                                            Navigator.push(context,MaterialPageRoute(builder: (context) => AnnounceScreen(announce: value,)))
+                                          }})
+                                      }
+                                    });
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 15,bottom: 15,left: 10, right: 10),
+                                    child: Row(
+                                      children: [
+                                        Text('Se connecter'),
+                                        Spacer(),
+                                        Icon(
+                                          Icons.arrow_forward_sharp,
+                                          color: Colors.deepOrange,
+                                          size: 25,
+                                        ),
+                                      ],
+                                    ),
+                                  )
                               ),
-                            ),
-
+                            )
                           ],
                         ),
                       ),
-                      //const Spacer(),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.black87,
-                                ),
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => SignupScreen()));
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.only(top: 15,bottom: 15,left: 10, right: 10),
-                                  child: Row(
-                                    children: [
-                                      Text('Créer un compte'),
-                                      Spacer(),
-                                      Icon(
-                                        Icons.arrow_forward_sharp,
-                                        color: Colors.deepOrange,
-                                        size: 25,
-                                      ),
-                                    ],
+
+                      Padding(
+                        padding: const EdgeInsets.only(top: 100),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.black87,
                                   ),
-                                )
-                            ),
-                          )
-                        ],
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => SignupScreen()));
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 15,bottom: 15,left: 10, right: 10),
+                                    child: Row(
+                                      children: [
+                                        Text('Créer un compte'),
+                                        Spacer(),
+                                        Icon(
+                                          Icons.arrow_forward_sharp,
+                                          color: Colors.deepOrange,
+                                          size: 25,
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ],
                   ),

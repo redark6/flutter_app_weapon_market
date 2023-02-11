@@ -45,7 +45,7 @@ class AnnounceGestureItem extends StatelessWidget {
                         style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
                       ),
                       Text(
-                        annnounce.price,
+                        annnounce.getPrice(),
                         style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
                       ),
                       Padding(

@@ -1,20 +1,38 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:weapon_marketplace/views/screens/signup.dart';
+import 'package:full_screen_image_null_safe/full_screen_image_null_safe.dart';
+import 'package:weapon_marketplace/services/date_service.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-import 'home.dart';
-
+import '../../models/announce.dart';
 
 class AnnounceScreen extends StatefulWidget {
-  AnnounceScreen({
-    Key? key,
+  final Announce announce;
+  const AnnounceScreen({
+    Key? key, required this.announce,
   }) : super(key: key);
+
+  _callNumber(String number) async{
+     //set the number here
+    bool? res = await FlutterPhoneDirectCaller.callNumber(number);
+  }
+
+  String? encodeQueryParameters(Map<String, String> params) {
+    return params.entries
+        .map((e) =>
+    '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+        .join('&');
+  }
 
   @override
   State<AnnounceScreen> createState() => _AnnounceScreenState();
 }
 
 class _AnnounceScreenState extends State<AnnounceScreen> {
-
+  DateService dateService = DateService();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -23,7 +41,7 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
           backgroundColor: Colors.black87,
           automaticallyImplyLeading: false,
           leading: IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back_sharp,
               size: 30,
             ),
@@ -57,29 +75,35 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
                 height: 300,
                 width: double.infinity,
                 child: FittedBox(
-                  child: Image.asset('lib/assets/images/no_image.jpeg'),
                   fit: BoxFit.fitHeight,
+                  child:
+                      FullScreenWidget(
+                        child: widget.announce.image.isEmpty ?
+                        Image.asset('lib/assets/images/no_image.jpeg'):  Image.memory(base64.decode(widget.announce.image)),
+
+                      ),
+
                 ),
               ),
-              const Padding(
+              Padding(
                 padding: EdgeInsets.only(top: 30),
                 child: Text(
-                  'Nom de l\'annonce',
+                  widget.announce.name,
                   style: TextStyle(color: Colors.black, fontSize: 20.0,fontWeight: FontWeight.bold),
                 ),
               ),
-              const Padding(
+              Padding(
                 padding: EdgeInsets.only(top: 15),
                 child: Text(
-                  '6500€',
+                  '${widget.announce.price}€',
                   style: TextStyle(color: Colors.deepOrange, fontSize: 16.0,fontWeight: FontWeight.bold),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.only(top: 15),
+               Padding(
+                padding: const EdgeInsets.only(top: 15),
                 child: Text(
-                  'Aujourd\'hui à 18h30',
-                  style: TextStyle(color: Colors.black, fontSize: 16.0),
+                  dateService.formatDate(widget.announce.date),
+                  style: const TextStyle(color: Colors.black, fontSize: 16.0),
                 ),
               ),
               Padding(
@@ -100,15 +124,33 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
                           child: Padding(
                             padding: const EdgeInsets.only(top: 15,bottom: 15,left: 10, right: 10),
                             child: Row(
-                              children: const [
-                                Image(
-                                  image: AssetImage('lib/assets/images/no_image.jpeg'),
-                                  height: 50,
-                                  width: 50,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(140),
+                                  child:  widget.announce.image.isEmpty ?
+                                    Image.asset('lib/assets/images/no_image.jpeg',
+                                      width: 70,
+                                      height: 70,
+                                      fit: BoxFit.cover) :
+                                    Image.memory(base64.decode(widget.announce.image),
+                                      width: 70,
+                                      height: 70,
+                                      fit: BoxFit.cover,
+                                    ),
+
                                 ),
-                                Text('nom vendeur'),
-                                Spacer(),
-                                Icon(
+
+
+
+                                  
+
+                                const SizedBox(width: 10),
+                                Text(
+                                  widget.announce.username,
+                                  style: const TextStyle(fontSize: 20),
+                                ),
+                                const Spacer(),
+                                const Icon(
                                   Icons.arrow_forward_sharp,
                                   color: Colors.deepOrange,
                                   size: 25,
@@ -128,10 +170,10 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
                   style: TextStyle(color: Colors.black, fontSize: 20.0,fontWeight: FontWeight.bold),
                 ),
               ),
-              const Padding(
+              Padding(
                 padding: EdgeInsets.only(top: 15),
                 child: Text(
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo ultricies sollicitudin. Nunc pulvinar nibh metus, eu auctor ipsum dignissim non. Curabitur non diam eu urna eleifend lobortis. Phasellus sed finibus arcu. Suspendisse eleifend ante ac facilisis commodo. Quisque ut eros vel nulla viverra dignissim a ut lacus. Proin ac turpis dolor. Aliquam ornare vulputate cursus. Vestibulum a hendrerit nibh. Integer quis finibus quam. Nullam a auctor libero. ',
+                  widget.announce.content,
                   style: TextStyle(color: Colors.black, fontSize: 14.0),
                 ),
               ),
@@ -146,17 +188,17 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
                 padding: EdgeInsets.only(top: 15),
                 child:
                   Row(
-                    children: const [
-                      Icon(
+                    children:  [
+                      const Icon(
                         Icons.map,
                         color: Colors.deepOrange,
                         size: 25,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 10),
+                        padding: const EdgeInsets.only(left: 10),
                         child: Text(
-                          '25 rue des tartines nutella',
-                          style: TextStyle(color: Colors.black, fontSize: 14.0),
+                          widget.announce.location,
+                          style: const TextStyle(color: Colors.black, fontSize: 14.0),
                         ),
                       ),
                     ],
@@ -174,20 +216,17 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.black87,
                             ),
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomeScreen()));
+                            onPressed: () async{
+                              widget._callNumber(widget.announce.phone);
                             },
                             child: Padding(
                                 padding: const EdgeInsets.only(top: 15,bottom: 15,left: 10, right: 10),
                                 child: Row(
-                                  children: [
+                                  children: const [
                                     Icon(Icons.phone_enabled_outlined),
                                     Text(
                                       'Télephone',
-                                      style: TextStyle(color: Colors.white, fontSize: 20.0),
+                                      style: TextStyle(color: Colors.white, fontSize: 15.0),
                                     ),
                                   ],
                                 )
@@ -203,19 +242,24 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
                               backgroundColor: Colors.black87,
                             ),
                             onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomeScreen()));
+                                final Uri emailLaunchUri = Uri(
+                                  scheme: 'mailto',
+                                  path: widget.announce.email,
+                                  query: widget.encodeQueryParameters(
+                                      <String, String>{'subject': 'A propos de votre annonce',
+                                        'body': "Bonjour, votre annonce : \"${widget.announce.name}\" est elle toujours disponible ?"}),
+                                );
+
+                                 launch(emailLaunchUri.toString());
                             },
                             child: Padding(
                                 padding: const EdgeInsets.only(top: 15,bottom: 15,left: 10, right: 10),
                                 child: Row(
-                                  children: [
+                                  children: const [
                                     Icon(Icons.mail_outline),
                                     Text(
                                       'Email',
-                                      style: TextStyle(color: Colors.white, fontSize: 20.0),
+                                      style: TextStyle(color: Colors.white, fontSize: 15.0),
                                     ),
                                   ],
                                 )

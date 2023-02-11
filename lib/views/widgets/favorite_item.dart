@@ -55,7 +55,7 @@ class FavoriteItem extends StatelessWidget {
                     ],
                   ),
                   Text(
-                    annnounce.price,
+                    annnounce.getPrice(),
                     style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
                   ),
                   Padding(
