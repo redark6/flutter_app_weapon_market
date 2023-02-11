@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:full_screen_image_null_safe/full_screen_image_null_safe.dart';
-import 'package:weapon_marketplace/screens/home.dart';
 import 'package:weapon_marketplace/screens/signup.dart';
 import '../models/announce.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AnnounceScreen extends StatefulWidget {
   final Announce announce;
@@ -17,6 +17,14 @@ class AnnounceScreen extends StatefulWidget {
      //set the number here
     bool? res = await FlutterPhoneDirectCaller.callNumber(number);
   }
+
+  String? encodeQueryParameters(Map<String, String> params) {
+    return params.entries
+        .map((e) =>
+    '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+        .join('&');
+  }
+
   @override
   State<AnnounceScreen> createState() => _AnnounceScreenState();
 }
@@ -215,7 +223,7 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
                                     Icon(Icons.phone_enabled_outlined),
                                     Text(
                                       'Télephone',
-                                      style: TextStyle(color: Colors.white, fontSize: 20.0),
+                                      style: TextStyle(color: Colors.white, fontSize: 15.0),
                                     ),
                                   ],
                                 )
@@ -231,19 +239,24 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
                               backgroundColor: Colors.black87,
                             ),
                             onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomeScreen()));
+                                final Uri emailLaunchUri = Uri(
+                                  scheme: 'mailto',
+                                  path: widget.announce.email,
+                                  query: widget.encodeQueryParameters(
+                                      <String, String>{'subject': 'A propos de votre annonce',
+                                        'body': "Bonjour, votre annonce : \"${widget.announce.name}\" est elle toujours disponible ?"}),
+                                );
+
+                                 launch(emailLaunchUri.toString());
                             },
                             child: Padding(
                                 padding: const EdgeInsets.only(top: 15,bottom: 15,left: 10, right: 10),
                                 child: Row(
-                                  children: [
+                                  children: const [
                                     Icon(Icons.mail_outline),
                                     Text(
                                       'Email',
-                                      style: TextStyle(color: Colors.white, fontSize: 20.0),
+                                      style: TextStyle(color: Colors.white, fontSize: 15.0),
                                     ),
                                   ],
                                 )
