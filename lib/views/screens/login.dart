@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:weapon_marketplace/screens/home.dart';
-import 'package:weapon_marketplace/screens/signup.dart';
-import '../web_services/controllers/authentication_controller.dart';
+import 'package:weapon_marketplace/views/screens/signup.dart';
+
+import '../../web_services/controllers/authentication_controller.dart';
+import 'home.dart';
+
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({

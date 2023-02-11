@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:weapon_marketplace/screens/home.dart';
-import '../web_services/controllers/authentication_controller.dart';
+
+import '../../web_services/controllers/authentication_controller.dart';
+import 'home.dart';
+
 
 class SignupScreen extends StatefulWidget {
   SignupScreen({

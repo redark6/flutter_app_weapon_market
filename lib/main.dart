@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:weapon_marketplace/screens/announce.dart';
+import 'package:weapon_marketplace/views/screens/main.dart';
+
 
 void main() {
   runApp(const MarketPlaceApp());
@@ -12,8 +13,8 @@ class MarketPlaceApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return MaterialApp(
-      title: 'Coding Pool',
-      home: AnnounceScreen(),
+      title: 'Weaponry',
+      home: MainScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
