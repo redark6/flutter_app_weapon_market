@@ -17,7 +17,7 @@ class AnnounceService {
         .get("token")
         .then((value) => token = value.toString());
     final response = await http.get(
-      Uri.parse(apiUrl + "announce/" + announceId.toString()),
+      Uri.parse("${apiUrl}announce/$announceId"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'cookie': token,
@@ -32,22 +32,21 @@ class AnnounceService {
   Future<List<Announce>> getAnnounces(Search search) async {
     List<Announce> announces = [];
     String token = "";
-    print(search);
     token = await SecureStorageService.getInstance()
         .get("token")
         .then((value) => token = value.toString());
     final response = await http.post(
-      Uri.parse(apiUrl + "announce/search",),
+      Uri.parse("${apiUrl}announce/search"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'cookie': token,
       },
       body:  jsonEncode({
         'title': search.title ?? '',
-        'regionId': search.regionId ?? null,
+        'regionId': search.regionId,
         'maxPrice': search.maxPrice ?? 0,
         'minPrice': search.minPrice ?? 0,
-        'userId': search.userId ?? null,
+        'userId': search.userId,
         })
     );
     if(response.statusCode == 200 ){
@@ -63,7 +62,6 @@ class AnnounceService {
     token = await SecureStorageService.getInstance()
         .get("token")
         .then((value) => token = value.toString());
-    print(token);
     final response = await http.delete(
         Uri.parse("${apiUrl}announce/$id/$user"),
         headers: <String, String>{
@@ -86,7 +84,7 @@ class AnnounceService {
         .get("token")
         .then((value) => token = value.toString());
     final response = await http.get(
-        Uri.parse(apiUrl + "announce/all-favorites/" + userId.toString(),),
+        Uri.parse("${apiUrl}announce/all-favorites/$userId",),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'cookie': token,

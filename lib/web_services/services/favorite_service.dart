@@ -1,7 +1,6 @@
 import 'package:http/http.dart' as http;
 
 import '../../models/sign_in.dart';
-import '../../models/sign_up.dart';
 
 class UserService {
   UserService();

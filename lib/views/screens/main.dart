@@ -15,13 +15,12 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+
   final List<Widget> _widgetOptions = <Widget>[
-    SearchAnnounceScreen(),
-    FavoriteAnnounceScreen(haveNavbar: false),
-    FavoriteAnnounceScreen(haveNavbar: false),
-    AccountScreen()
+    const SearchAnnounceScreen(),
+    const FavoriteAnnounceScreen(haveNavbar: false),
+    const FavoriteAnnounceScreen(haveNavbar: false),
+    const AccountScreen()
   ];
 
   void _onItemTapped(int index) {
@@ -46,7 +45,7 @@ class _MainScreenState extends State<MainScreen> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => PublishAnnounceScreen()));
+                builder: (context) => const PublishAnnounceScreen()));
         break;
       case 3:
       //showModal(context);

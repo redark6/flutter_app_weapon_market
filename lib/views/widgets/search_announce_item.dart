@@ -13,7 +13,6 @@ class SearchAnnounceItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('Building user ${annnounce.name}');
     return SizedBox(
       height: double.infinity,
       child: Card(
@@ -45,7 +44,7 @@ class SearchAnnounceItem extends StatelessWidget {
                       child:
                       IconButton(
                           color: Colors.black,
-                          icon: Icon(Icons.star_border_outlined),
+                          icon: const Icon(Icons.star_border_outlined),
                           onPressed: () => {
                             print("rien pr le moment")
                           }
@@ -61,21 +60,21 @@ class SearchAnnounceItem extends StatelessWidget {
                     children: [
                       Text(
                         annnounce.name,
-                        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                        style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
                       ),
                     ],
                   ),
                   Text(
                     annnounce.getPrice(),
-                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                    style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
                   ),
                   Text(
                     annnounce.location,
-                    style: TextStyle(fontWeight: FontWeight.normal, fontSize: 14),
+                    style: const TextStyle(fontWeight: FontWeight.normal, fontSize: 14),
                   ),
                   Text(
                     annnounce.date,
-                    style: TextStyle(fontWeight: FontWeight.normal, fontSize: 14),
+                    style: const TextStyle(fontWeight: FontWeight.normal, fontSize: 14),
                   ),
                 ],
               )

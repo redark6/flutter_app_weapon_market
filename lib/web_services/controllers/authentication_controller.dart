@@ -1,8 +1,4 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import '../../models/sign_in.dart';
-import '../../models/sign_up.dart';
-import '../services/authentication_service.dart';
 
 
 class AuthenticationController with ChangeNotifier {

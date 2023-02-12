@@ -31,7 +31,7 @@ class AnnounceService {
   }
 */
   Future<http.Response> getAnnounceById(int id) async {
-    final response = await http.get(Uri.parse("${url}auth/login/${id}"));
+    final response = await http.get(Uri.parse("${url}auth/login/$id"));
     return response;
   }
 

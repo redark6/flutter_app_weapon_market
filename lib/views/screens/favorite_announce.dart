@@ -4,13 +4,12 @@ import 'package:weapon_marketplace/services/announce_service.dart';
 import 'package:weapon_marketplace/services/auth_service.dart';
 
 import '../../models/user.dart';
-import '../../web_services/controllers/favorite_controller.dart';
 import '../widgets/favorite_item.dart';
 
 
 class FavoriteAnnounceScreen extends StatefulWidget {
   final bool haveNavbar;
-  FavoriteAnnounceScreen({
+  const FavoriteAnnounceScreen({
     Key? key, required this.haveNavbar,
   }) : super(key: key);
 

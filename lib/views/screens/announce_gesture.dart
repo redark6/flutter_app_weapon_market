@@ -5,12 +5,11 @@ import 'package:weapon_marketplace/services/auth_service.dart';
 
 import '../../models/search.dart';
 import '../../models/user.dart';
-import '../../web_services/controllers/favorite_controller.dart';
 import '../widgets/announce_gesture_item.dart';
 
 
 class AnnounceGestureScreen extends StatefulWidget {
-  AnnounceGestureScreen({
+  const AnnounceGestureScreen({
     Key? key,
   }) : super(key: key);
 

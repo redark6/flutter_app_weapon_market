@@ -11,7 +11,7 @@ import 'user_announce.dart';
 
 
 class AccountScreen extends StatefulWidget {
-  AccountScreen({
+  const AccountScreen({
     Key? key,
   }) : super(key: key);
 
@@ -93,7 +93,7 @@ class _AccountScreenState extends State<AccountScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => AnnounceGestureScreen()));
+                                    builder: (context) => const AnnounceGestureScreen()));
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(top: 15,bottom: 15,left: 10, right: 10),
@@ -129,7 +129,7 @@ class _AccountScreenState extends State<AccountScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => FavoriteAnnounceScreen(haveNavbar: true)));
+                                    builder: (context) => const FavoriteAnnounceScreen(haveNavbar: true)));
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(top: 15,bottom: 15,left: 10, right: 10),
@@ -165,7 +165,7 @@ class _AccountScreenState extends State<AccountScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => ProfilScreen()));
+                                    builder: (context) => const ProfilScreen()));
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(top: 15,bottom: 15,left: 10, right: 10),
@@ -202,10 +202,10 @@ class _AccountScreenState extends State<AccountScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => SignupScreen()));
+                                    builder: (context) => const SignupScreen()));
                           },
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 15,bottom: 15,left: 10, right: 10),
+                          child: const Padding(
+                            padding: EdgeInsets.only(top: 15,bottom: 15,left: 10, right: 10),
                             child: Text('Déconnexion',
                                 style: TextStyle(color: Colors.deepOrange, fontSize: 15.0,fontWeight: FontWeight.bold)
                             ),

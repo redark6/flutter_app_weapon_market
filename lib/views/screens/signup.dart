@@ -6,11 +6,9 @@ import '../../web_services/controllers/authentication_controller.dart';
 import 'package:weapon_marketplace/models/sign_up.dart';
 import 'package:weapon_marketplace/services/announce_service.dart';
 
-import 'announce.dart';
-
 
 class SignupScreen extends StatefulWidget {
-  SignupScreen({
+  const SignupScreen({
     Key? key,
   }) : super(key: key);
 
@@ -52,7 +50,7 @@ class _SignupScreenState extends State<SignupScreen> {
           body: Column(
               children: [
                 SingleChildScrollView(
-                  padding: EdgeInsets.symmetric(horizontal: 30.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -76,18 +74,18 @@ class _SignupScreenState extends State<SignupScreen> {
                                   controller: usernameEditingController,
                                   cursorColor: Colors.deepOrange,
                                   decoration: InputDecoration(
-                                    prefixIcon: Icon(Icons.person),
+                                    prefixIcon: const Icon(Icons.person),
                                     hintText: "Nom d'utilisateur",
                                     enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(width: 1, color: Colors.black87),
+                                      borderSide: const BorderSide(width: 1, color: Colors.black87),
                                       borderRadius: BorderRadius.circular(5.0),
                                     ),
                                     focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(width: 1, color: Colors.black87),
+                                      borderSide: const BorderSide(width: 1, color: Colors.black87),
                                       borderRadius: BorderRadius.circular(5.0),
                                     ),
                                     errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(width: 1, color: Colors.redAccent),
+                                      borderSide: const BorderSide(width: 1, color: Colors.redAccent),
                                       borderRadius: BorderRadius.circular(5.0),
                                     ),
                                   ),
@@ -106,18 +104,18 @@ class _SignupScreenState extends State<SignupScreen> {
                                   controller: emailEditingController,
                                   cursorColor: Colors.deepOrange,
                                   decoration: InputDecoration(
-                                    prefixIcon: Icon(Icons.mail),
+                                    prefixIcon: const Icon(Icons.mail),
                                     hintText: "Email",
                                     enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(width: 1, color: Colors.black87),
+                                      borderSide: const BorderSide(width: 1, color: Colors.black87),
                                       borderRadius: BorderRadius.circular(5.0),
                                     ),
                                     focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(width: 1, color: Colors.black87),
+                                      borderSide: const BorderSide(width: 1, color: Colors.black87),
                                       borderRadius: BorderRadius.circular(5.0),
                                     ),
                                     errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(width: 1, color: Colors.redAccent),
+                                      borderSide: const BorderSide(width: 1, color: Colors.redAccent),
                                       borderRadius: BorderRadius.circular(5.0),
                                     ),
                                   ),
@@ -136,18 +134,18 @@ class _SignupScreenState extends State<SignupScreen> {
                                   controller: passwordEditingController,
                                   cursorColor: Colors.deepOrange,
                                   decoration: InputDecoration(
-                                    prefixIcon: Icon(Icons.lock),
+                                    prefixIcon: const Icon(Icons.lock),
                                     hintText: "Mot de passe",
                                     enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(width: 1, color: Colors.black87),
+                                      borderSide: const BorderSide(width: 1, color: Colors.black87),
                                       borderRadius: BorderRadius.circular(5.0),
                                     ),
                                     focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(width: 1, color: Colors.black87),
+                                      borderSide: const BorderSide(width: 1, color: Colors.black87),
                                       borderRadius: BorderRadius.circular(5.0),
                                     ),
                                     errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(width: 1, color: Colors.redAccent),
+                                      borderSide: const BorderSide(width: 1, color: Colors.redAccent),
                                       borderRadius: BorderRadius.circular(5.0),
                                     ),
                                   ),
@@ -184,7 +182,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
                                   },
                                   child: const Padding(
-                                      padding: const EdgeInsets.only(top: 15,bottom: 15,left: 10, right: 10),
+                                      padding: EdgeInsets.only(top: 15,bottom: 15,left: 10, right: 10),
                                       child: Text(
                                         'Créer mon compte',
                                         style: TextStyle(color: Colors.white, fontSize: 20.0),

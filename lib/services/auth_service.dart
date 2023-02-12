@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'package:weapon_marketplace/models/sign_up.dart';
 import 'package:weapon_marketplace/services/secure_storage.dart';
@@ -18,7 +17,7 @@ class AuthService {
 
   Future<User?> getLoggedUser(String username) async {
     List<User> users = [];
-    final response = await http.get(Uri.parse(apiUrl + "users/users"));
+    final response = await http.get(Uri.parse("${apiUrl}users/users"));
 
     for (dynamic element in jsonDecode(response.body)) {
       User user = User.fromJson(element);
@@ -35,7 +34,7 @@ class AuthService {
   Future<User> getUserById(int id) async {
     User user;
     final response =
-    await http.get(Uri.parse(apiUrl + "users/" + id.toString()));
+    await http.get(Uri.parse("${apiUrl}users/$id"));
     user = User.fromJson(jsonDecode(response.body));
 
     return user;
@@ -69,7 +68,7 @@ class AuthService {
 
   Future<http.Response> register(SignUp user) async {
     final response = await http.post(
-      Uri.parse(apiUrl + 'users/register'),
+      Uri.parse('${apiUrl}users/register'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -93,7 +92,7 @@ class AuthService {
         .get("token")
         .then((value) => token = value.toString());
     final response = await http.put(
-      Uri.parse(apiUrl + "users/" + user.id.toString()),
+      Uri.parse("${apiUrl}users/${user.id}"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'cookie': token,
@@ -118,7 +117,7 @@ class AuthService {
     var request = http.MultipartRequest(
       'POST',
       Uri.parse(
-        apiUrl + 'users/profile-picture',
+        '${apiUrl}users/profile-picture',
       ),
     );
 

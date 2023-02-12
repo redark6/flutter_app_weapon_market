@@ -17,7 +17,7 @@ class AnnounceScreen extends StatefulWidget {
 
   _callNumber(String number) async{
      //set the number here
-    bool? res = await FlutterPhoneDirectCaller.callNumber(number);
+     await FlutterPhoneDirectCaller.callNumber(number);
   }
 
   String? encodeQueryParameters(Map<String, String> params) {
@@ -53,7 +53,7 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
             Padding(
               padding: const EdgeInsets.only(right: 15),
               child: IconButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.star_border,
                   size: 30,
                 ),
@@ -67,7 +67,7 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
           elevation: 2,
         ),
         body: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 30.0),
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -86,17 +86,17 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 30),
+                padding: const EdgeInsets.only(top: 30),
                 child: Text(
                   widget.announce.name,
-                  style: TextStyle(color: Colors.black, fontSize: 20.0,fontWeight: FontWeight.bold),
+                  style: const TextStyle(color: Colors.black, fontSize: 20.0,fontWeight: FontWeight.bold),
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 15),
+                padding: const EdgeInsets.only(top: 15),
                 child: Text(
                   '${widget.announce.price}€',
-                  style: TextStyle(color: Colors.deepOrange, fontSize: 16.0,fontWeight: FontWeight.bold),
+                  style: const TextStyle(color: Colors.deepOrange, fontSize: 16.0,fontWeight: FontWeight.bold),
                 ),
               ),
                Padding(
@@ -119,7 +119,7 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => SignupScreen()));
+                                    builder: (context) => const SignupScreen()));
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(top: 15,bottom: 15,left: 10, right: 10),
@@ -171,21 +171,21 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 15),
+                padding: const EdgeInsets.only(top: 15),
                 child: Text(
                   widget.announce.content,
-                  style: TextStyle(color: Colors.black, fontSize: 14.0),
+                  style: const TextStyle(color: Colors.black, fontSize: 14.0),
                 ),
               ),
               const Padding(
-                padding: EdgeInsets.only(top: 15),
+                padding:  EdgeInsets.only(top: 15),
                 child: Text(
                   'Localisation',
                   style: TextStyle(color: Colors.black, fontSize: 20.0,fontWeight: FontWeight.bold),
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 15),
+                padding: const EdgeInsets.only(top: 15),
                 child:
                   Row(
                     children:  [
@@ -250,7 +250,7 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
                                         'body': "Bonjour, votre annonce : \"${widget.announce.name}\" est elle toujours disponible ?"}),
                                 );
 
-                                 launch(emailLaunchUri.toString());
+                                 launchUrl(emailLaunchUri);
                             },
                             child: Padding(
                                 padding: const EdgeInsets.only(top: 15,bottom: 15,left: 10, right: 10),

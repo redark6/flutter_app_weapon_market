@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 
 class PublishAnnounceScreen extends StatefulWidget {
-  PublishAnnounceScreen({
+  const PublishAnnounceScreen({
     Key? key,
   }) : super(key: key);
 
@@ -24,7 +24,7 @@ class _PublishAnnounceState extends State<PublishAnnounceScreen> {
               centerTitle: false,
               elevation: 2,
               leading: IconButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.arrow_back_sharp,
                   size: 30,
                 ),
@@ -37,7 +37,7 @@ class _PublishAnnounceState extends State<PublishAnnounceScreen> {
               child: Column(
                   children: [
                     SingleChildScrollView(
-                      padding: EdgeInsets.symmetric(horizontal: 30.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -67,15 +67,15 @@ class _PublishAnnounceState extends State<PublishAnnounceScreen> {
                                       decoration: InputDecoration(
                                         hintText: "Titre de l'annonce",
                                         enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(width: 1, color: Colors.black87),
+                                          borderSide: const BorderSide(width: 1, color: Colors.black87),
                                           borderRadius: BorderRadius.circular(5.0),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(width: 1, color: Colors.black87),
+                                          borderSide: const BorderSide(width: 1, color: Colors.black87),
                                           borderRadius: BorderRadius.circular(5.0),
                                         ),
                                         errorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(width: 1, color: Colors.redAccent),
+                                          borderSide: const BorderSide(width: 1, color: Colors.redAccent),
                                           borderRadius: BorderRadius.circular(5.0),
                                         ),
                                       ),
@@ -95,15 +95,15 @@ class _PublishAnnounceState extends State<PublishAnnounceScreen> {
                                       decoration: InputDecoration(
                                         hintText: "Category",
                                         enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(width: 1, color: Colors.black87),
+                                          borderSide: const BorderSide(width: 1, color: Colors.black87),
                                           borderRadius: BorderRadius.circular(5.0),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(width: 1, color: Colors.black87),
+                                          borderSide: const BorderSide(width: 1, color: Colors.black87),
                                           borderRadius: BorderRadius.circular(5.0),
                                         ),
                                         errorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(width: 1, color: Colors.redAccent),
+                                          borderSide: const BorderSide(width: 1, color: Colors.redAccent),
                                           borderRadius: BorderRadius.circular(5.0),
                                         ),
                                       ),
@@ -123,15 +123,15 @@ class _PublishAnnounceState extends State<PublishAnnounceScreen> {
                                       decoration: InputDecoration(
                                         hintText: "Localisation du bien",
                                         enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(width: 1, color: Colors.black87),
+                                          borderSide: const BorderSide(width: 1, color: Colors.black87),
                                           borderRadius: BorderRadius.circular(5.0),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(width: 1, color: Colors.black87),
+                                          borderSide: const BorderSide(width: 1, color: Colors.black87),
                                           borderRadius: BorderRadius.circular(5.0),
                                         ),
                                         errorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(width: 1, color: Colors.redAccent),
+                                          borderSide: const BorderSide(width: 1, color: Colors.redAccent),
                                           borderRadius: BorderRadius.circular(5.0),
                                         ),
                                       ),
@@ -151,15 +151,15 @@ class _PublishAnnounceState extends State<PublishAnnounceScreen> {
                                       decoration: InputDecoration(
                                         hintText: "Prix",
                                         enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(width: 1, color: Colors.black87),
+                                          borderSide: const BorderSide(width: 1, color: Colors.black87),
                                           borderRadius: BorderRadius.circular(5.0),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(width: 1, color: Colors.black87),
+                                          borderSide: const BorderSide(width: 1, color: Colors.black87),
                                           borderRadius: BorderRadius.circular(5.0),
                                         ),
                                         errorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(width: 1, color: Colors.redAccent),
+                                          borderSide: const BorderSide(width: 1, color: Colors.redAccent),
                                           borderRadius: BorderRadius.circular(5.0),
                                         ),
                                       ),
@@ -180,15 +180,15 @@ class _PublishAnnounceState extends State<PublishAnnounceScreen> {
                                       decoration: InputDecoration(
                                         hintText: "Description",
                                         enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(width: 1, color: Colors.black87),
+                                          borderSide: const BorderSide(width: 1, color: Colors.black87),
                                           borderRadius: BorderRadius.circular(5.0),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(width: 1, color: Colors.black87),
+                                          borderSide: const BorderSide(width: 1, color: Colors.black87),
                                           borderRadius: BorderRadius.circular(5.0),
                                         ),
                                         errorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(width: 1, color: Colors.redAccent),
+                                          borderSide: const BorderSide(width: 1, color: Colors.redAccent),
                                           borderRadius: BorderRadius.circular(5.0),
                                         ),
                                       ),
@@ -220,7 +220,7 @@ class _PublishAnnounceState extends State<PublishAnnounceScreen> {
                                       child: Padding(
                                         padding: const EdgeInsets.only(top: 15,bottom: 15,left: 10, right: 10),
                                         child: Row(
-                                          children: [
+                                          children: const [
                                             Text('Publier mon annonce'),
                                             Spacer(),
                                             Icon(

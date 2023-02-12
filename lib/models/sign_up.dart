@@ -1,5 +1,3 @@
-import 'dart:io';
-
 class SignUp {
 
   final String email;

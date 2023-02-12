@@ -10,7 +10,7 @@ import '../widgets/user_announce_item.dart';
 
 class UserAnnounceScreen extends StatefulWidget {
   final int userId;
-  UserAnnounceScreen({
+  const UserAnnounceScreen({
     Key? key, required this.userId
   }) : super(key: key);
 

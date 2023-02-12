@@ -16,7 +16,7 @@ class MarketPlaceApp extends StatelessWidget {
   Widget build(BuildContext context) {
     HttpOverrides.global = MyHttpOverrides();
 
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Weaponry',
       home: LoginScreen(),
       debugShowCheckedModeBanner: false,

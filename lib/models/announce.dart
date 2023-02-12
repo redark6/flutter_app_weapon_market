@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 class Announce {
 
   final int id;

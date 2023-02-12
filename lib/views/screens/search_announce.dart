@@ -5,7 +5,7 @@ import '../../web_services/controllers/favorite_controller.dart';
 import '../widgets/search_announce_item.dart';
 
 class SearchAnnounceScreen extends StatefulWidget {
-  SearchAnnounceScreen({
+  const SearchAnnounceScreen({
     Key? key,
   }) : super(key: key);
 
@@ -33,35 +33,33 @@ class _SearchAnnounceScreenState extends State<SearchAnnounceScreen> {
               child: Scaffold(
                   body: Column(
                     children: [
-                      Container(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                  flex: 8,
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(),
-                                      labelText: 'Rechercher un bien ...',
-                                      hintText: 'Rechercher un bien ...',
-                                    ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10),
+                        child: Row(
+                          children: [
+                            const Expanded(
+                                flex: 8,
+                                child: TextField(
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    labelText: 'Rechercher un bien ...',
+                                    hintText: 'Rechercher un bien ...',
                                   ),
-                              ),
-                              Expanded(
-                                  flex: 2,
-                                  child: Center(
-                                    child: IconButton(
-                                        color: Colors.black,
-                                        icon: Icon(Icons.search),
-                                        onPressed: () => {
-                                          print("rien pr le moment")
-                                        }
-                                    ),
-                                  )
-                              )
-                            ],
-                          ),
+                                ),
+                            ),
+                            Expanded(
+                                flex: 2,
+                                child: Center(
+                                  child: IconButton(
+                                      color: Colors.black,
+                                      icon: const Icon(Icons.search),
+                                      onPressed: () => {
+                                        print("rien pr le moment")
+                                      }
+                                  ),
+                                )
+                            )
+                          ],
                         ),
                       ),
                       Expanded(

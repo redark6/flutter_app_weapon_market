@@ -11,9 +11,9 @@ class DateService {
       return "aujourd'hui à ${DateFormat.Hm().format(date)}";
     }
 
-    if (date.day == now.subtract(Duration(days: 1)).day &&
-        date.month == now.subtract(Duration(days: 1)).month &&
-        date.year == now.subtract(Duration(days: 1)).year) {
+    if (date.day == now.subtract(const Duration(days: 1)).day &&
+        date.month == now.subtract(const Duration(days: 1)).month &&
+        date.year == now.subtract(const Duration(days: 1)).year) {
       return 'hier à ${DateFormat.Hm().format(date)}';
     }
 
