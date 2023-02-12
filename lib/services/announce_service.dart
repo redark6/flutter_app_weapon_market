@@ -101,7 +101,6 @@ class AnnounceService {
   }
 
   Future<bool> deleteFavorite(int announceId, int userId) async {
-    List<Announce> announces = [];
     String token = "";
     token = await SecureStorageService.getInstance()
         .get("token")
