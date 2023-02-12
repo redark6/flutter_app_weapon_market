@@ -25,6 +25,7 @@ class SearchAnnounceItem extends StatelessWidget {
       child: SizedBox(
         height: double.infinity,
         child: Card(
+          clipBehavior: Clip.antiAlias,
           child: ListTile(
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,6 +49,7 @@ class SearchAnnounceItem extends StatelessWidget {
                                   : Image.memory(
                                       base64.decode(announce.image),
                                       fit: BoxFit.fill,
+                                      height: 130,
                                     ),
                             ),
                           ),
@@ -67,7 +69,7 @@ class SearchAnnounceItem extends StatelessWidget {
                     Row(
                       children: [
                         SizedBox(
-                          width: (MediaQuery.of(context).size.height / 4.5),
+                          width: (MediaQuery.of(context).size.height / 5.5),
                           child: Text(
                             announce.name,
                             overflow: TextOverflow.fade,

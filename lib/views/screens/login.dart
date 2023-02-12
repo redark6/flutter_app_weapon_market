@@ -177,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
 
                       Padding(
-                        padding: const EdgeInsets.only(top: 100),
+                        padding: const EdgeInsets.only(top: 40),
                         child: Row(
                           children: [
                             Expanded(

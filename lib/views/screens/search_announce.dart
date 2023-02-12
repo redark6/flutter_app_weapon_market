@@ -76,7 +76,7 @@ class _SearchAnnounceScreenState extends State<SearchAnnounceScreen> {
                         child:  (snapshot.data?.isNotEmpty)! ? GridView.count(
                           crossAxisCount: 2,
                           childAspectRatio: MediaQuery.of(context).size.width /
-                              (MediaQuery.of(context).size.height / 1.3),
+                              (MediaQuery.of(context).size.height / 1.6),
                           children: [
                             for (var itemPost
                             in snapshot.data as List<Announce>)
