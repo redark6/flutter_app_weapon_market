@@ -78,4 +78,46 @@ class AnnounceService {
       return false;
     }
   }
+
+  Future<List<Announce>> getFavoriteAnnounces(int userId) async {
+    List<Announce> announces = [];
+    String token = "";
+    token = await SecureStorageService.getInstance()
+        .get("token")
+        .then((value) => token = value.toString());
+    final response = await http.get(
+        Uri.parse(apiUrl + "announce/all-favorites/" + userId.toString(),),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'cookie': token,
+        },
+    );
+    if(response.statusCode == 200 ){
+      List tmpList = json.decode(response.body) as List;
+      for (var element in tmpList) { announces.add(Announce.fromJson(element)); }
+      return announces;
+    }
+    return announces;
+  }
+
+  Future<bool> deleteFavorite(int announceId, int userId) async {
+    List<Announce> announces = [];
+    String token = "";
+    token = await SecureStorageService.getInstance()
+        .get("token")
+        .then((value) => token = value.toString());
+    final response = await http.delete(
+      Uri.parse("${apiUrl}announce/delete-favorite/$announceId/$userId",),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'cookie': token,
+      },
+    );
+    if(response.statusCode == 200 ){
+      return true;
+    }
+    return false;
+  }
+
+
 }

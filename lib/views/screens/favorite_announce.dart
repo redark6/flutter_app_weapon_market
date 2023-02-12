@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:weapon_marketplace/models/announce.dart';
+import 'package:weapon_marketplace/services/announce_service.dart';
+import 'package:weapon_marketplace/services/auth_service.dart';
 
+import '../../models/user.dart';
 import '../../web_services/controllers/favorite_controller.dart';
 import '../widgets/favorite_item.dart';
 
@@ -13,17 +16,24 @@ class FavoriteAnnounceScreen extends StatefulWidget {
 
   @override
   State<FavoriteAnnounceScreen> createState() => _FavoriteAnnounceScreenState();
+
 }
 
 class _FavoriteAnnounceScreenState extends State<FavoriteAnnounceScreen> {
 
-  FavoriteController favoriteAnnounceController = FavoriteController();
+  AuthService authService = AuthService();
+  AnnounceService annonceService = AnnounceService();
   late Future<List<Announce>> favoriteAnnounce;
+  int _int = 0;
+
+  set callback(int value) => setState(() => {
+    _int = value,
+  });
 
   @override
   Widget build(BuildContext context) {
-
-    favoriteAnnounce = favoriteAnnounceController.getFavoriteAnnounces();
+    User? user = authService.getCurrentUser();
+    favoriteAnnounce = annonceService.getFavoriteAnnounces(user != null ? user.id : 0);
 
     return FutureBuilder(
         future: favoriteAnnounce,
@@ -37,7 +47,7 @@ class _FavoriteAnnounceScreenState extends State<FavoriteAnnounceScreen> {
                         backgroundColor: Colors.black87,
                         automaticallyImplyLeading: false,
                         leading: IconButton(
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.arrow_back_sharp,
                             size: 30,
                           ),
@@ -52,7 +62,7 @@ class _FavoriteAnnounceScreenState extends State<FavoriteAnnounceScreen> {
                         children: [
                           for (var itemPost
                           in snapshot.data as List<Announce>)
-                            FavoriteItem(annnounce: itemPost),
+                            FavoriteItem(announce: itemPost, callback: (val) => setState(() => _int = val)),
                         ],
                       )
                   )
