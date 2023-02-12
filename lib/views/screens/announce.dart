@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:weapon_marketplace/services/auth_service.dart';
 import 'package:weapon_marketplace/views/screens/signup.dart';
 import 'package:full_screen_image_null_safe/full_screen_image_null_safe.dart';
 import 'package:weapon_marketplace/services/date_service.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../models/announce.dart';
+import '../../models/user.dart';
 
 class AnnounceScreen extends StatefulWidget {
   final Announce announce;
@@ -32,9 +34,21 @@ class AnnounceScreen extends StatefulWidget {
 }
 
 class _AnnounceScreenState extends State<AnnounceScreen> {
+  AuthService authService = AuthService();
+  User? user;
+  getUser(userId) async{
+    if(user != null) {
+      return;
+    }
+    var us = await authService.getUserById(userId);
+    setState(() {
+      user = us;
+    });
+  }
   DateService dateService = DateService();
   @override
   Widget build(BuildContext context) {
+    getUser(widget.announce.userId);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -127,23 +141,17 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
                               children: [
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(140),
-                                  child:  widget.announce.image.isEmpty ?
+                                  child:  user == null ||user!.profilePictureUrl.isEmpty ?
                                     Image.asset('lib/assets/images/no_image.jpeg',
                                       width: 70,
                                       height: 70,
                                       fit: BoxFit.cover) :
-                                    Image.memory(base64.decode(widget.announce.image),
+                                    Image.memory(base64.decode(user!.profilePictureUrl),
                                       width: 70,
                                       height: 70,
                                       fit: BoxFit.cover,
                                     ),
-
                                 ),
-
-
-
-                                  
-
                                 const SizedBox(width: 10),
                                 Text(
                                   widget.announce.username,

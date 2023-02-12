@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:weapon_marketplace/services/auth_service.dart';
 import 'package:weapon_marketplace/views/screens/profil.dart';
@@ -51,19 +53,30 @@ class _AccountScreenState extends State<AccountScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => UserAnnounceScreen(userId: user != null ? user.id : 1,)));
+                                    builder: (context) => UserAnnounceScreen(userId: user.id)));
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(top: 15,bottom: 15,left: 10, right: 10),
                             child: Row(
                               children: [
-                                const CircleAvatar(
-                                  radius: 30, // Image radius
-                                  backgroundImage: AssetImage('lib/assets/images/no_image.jpeg'),
-                                ),
+                            ClipRRect(
+                            borderRadius: BorderRadius.circular(240),
+                            child: user!.profilePictureUrl.isEmpty
+                                ? Image.asset(
+                              ('lib/assets/images/no_image.jpeg'),
+                              width: 80,
+                              height: 80,
+                              fit: BoxFit.fill,)
+                                : Image.memory(
+                                base64.decode(user.profilePictureUrl),
+                                width: 80,
+                                height: 80,
+                                fit: BoxFit.fill
+                            ),
+                          ),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 10),
-                                  child: Text(user != null ? user.username : 'nom vendeur'),
+                                  child: Text(user.username),
                                 ),
                                 const Spacer(),
                                 const Icon(

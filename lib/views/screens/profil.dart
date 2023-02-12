@@ -72,7 +72,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                                       height: 80,
                                       fit: BoxFit.fill,)
                                   : Image.memory(
-                                      base64.decode(user!.profilePictureUrl),
+                                      base64.decode(user.profilePictureUrl),
                                       width: 80,
                                       height: 80,
                                       fit: BoxFit.fill
@@ -81,9 +81,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                             Padding(
                               padding: const EdgeInsets.only(left: 10),
                               child: Text(
-                                user != null
-                                    ? user.username
-                                    : "nom d'utilisateur",
+                               user.username,
                                 style: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 25.0,
@@ -122,9 +120,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                             Padding(
                               padding: const EdgeInsets.only(left: 10),
                               child: Text(
-                                user != null
-                                    ? user.username
-                                    : "nom d'utilisateur",
+                                user.username,
                                 style: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 15.0,
@@ -156,7 +152,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                             Padding(
                               padding: const EdgeInsets.only(left: 10),
                               child: Text(
-                                user != null ? user.phone : '0645821584',
+                               user.phone,
                                 style: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 15.0,
@@ -188,7 +184,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                             Padding(
                               padding: const EdgeInsets.only(left: 10),
                               child: Text(
-                                user != null ? user.email : 'truc@truc.fr',
+                                user.email,
                                 style: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 15.0,

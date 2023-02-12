@@ -70,14 +70,14 @@ class _UserAnnounceScreenState extends State<UserAnnounceScreen> {
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(3.0),
                                     child: user!.profilePictureUrl.isEmpty ?
-                                  Image.asset('lib/assets/images/no_image.jpeg'):  Image.memory(base64.decode(user!.profilePictureUrl)),
+                                  Image.asset('lib/assets/images/no_image.jpeg'):  Image.memory(base64.decode(user.profilePictureUrl)),
                                   ),
                                 ),
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(left: 10),
-                              child: Text(user != null ? user.username : "Nom d'utilisateur",
+                              child: Text(user.username,
                                   style: const TextStyle(color: Colors.black, fontSize: 20.0,fontWeight: FontWeight.bold)
                               ),
                             )

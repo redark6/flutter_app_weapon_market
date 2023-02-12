@@ -1,5 +1,4 @@
 class CreateAnnounce {
-
   final String name;
   final String content;
   final String location;
