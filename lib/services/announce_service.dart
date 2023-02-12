@@ -32,6 +32,7 @@ class AnnounceService {
   Future<List<Announce>> getAnnounces(Search search) async {
     List<Announce> announces = [];
     String token = "";
+    print(search);
     token = await SecureStorageService.getInstance()
         .get("token")
         .then((value) => token = value.toString());
@@ -55,5 +56,26 @@ class AnnounceService {
       return announces;
     }
     return announces;
+  }
+
+  Future<bool> deleteAnnounce(int id, int? user) async{
+    String token = "";
+    token = await SecureStorageService.getInstance()
+        .get("token")
+        .then((value) => token = value.toString());
+    print(token);
+    final response = await http.delete(
+        Uri.parse("${apiUrl}announce/$id/$user"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'cookie': token,
+
+        },
+    );
+    if(response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

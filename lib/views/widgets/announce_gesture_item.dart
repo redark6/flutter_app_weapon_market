@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:weapon_marketplace/services/announce_service.dart';
+import 'package:weapon_marketplace/services/auth_service.dart';
 import 'package:weapon_marketplace/services/date_service.dart';
 
 import '../../models/announce.dart';
@@ -8,14 +10,41 @@ import '../../models/announce.dart';
 
 class AnnounceGestureItem extends StatelessWidget {
   final Announce announce;
-
+  final Function callback;
   const AnnounceGestureItem({
     Key? key,
     required this.announce,
+    required this.callback,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+    AnnounceService announceService = AnnounceService();
+    AuthService authService = AuthService();
+
+    Widget cancelButton = TextButton(
+      child: const Text("Annuler"),
+      onPressed:  () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget continueButton = TextButton(
+      child: const Text("Continuer"),
+      onPressed:  () {
+        announceService.deleteAnnounce(announce.id, authService.getCurrentUser()?.id).then((value) => {callback(1), Navigator.of(context).pop()});
+      },
+    );
+    AlertDialog alert = AlertDialog(
+      title: const Text("Attention"),
+      content: const Text("Voulez vous supprimer cette annonce ?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+
     DateService dateService = DateService();
     return Card(
       child: ListTile(
@@ -79,9 +108,12 @@ class AnnounceGestureItem extends StatelessWidget {
                     backgroundColor: Colors.red,
                   ),
                   onPressed: () {
-                    () => {
-                      print("supprimer")
-                    };
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return alert;
+                      },
+                    );
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(top: 5,bottom: 5,left: 20, right: 20),

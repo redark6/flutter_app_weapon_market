@@ -19,6 +19,11 @@ class AnnounceGestureScreen extends StatefulWidget {
 }
 
 class _AnnounceGestureScreenState extends State<AnnounceGestureScreen> {
+   int _int = 0;
+
+  set callback(int value) => setState(() => {
+    _int = value,
+  });
 
   AnnounceService favoriteAnnounceController = AnnounceService();
   AuthService authService = AuthService();
@@ -27,9 +32,8 @@ class _AnnounceGestureScreenState extends State<AnnounceGestureScreen> {
   @override
   Widget build(BuildContext context) {
     final User? user = authService.getCurrentUser();
-    if(user != null) {
-      userAnnounces = favoriteAnnounceController.getAnnounces(Search(null, null, null, null, user.id));
-    }
+    userAnnounces = favoriteAnnounceController.getAnnounces(Search(null, null, null, null, user != null ? user.id : 0));
+
 
     return FutureBuilder(
         future: userAnnounces,
@@ -58,7 +62,7 @@ class _AnnounceGestureScreenState extends State<AnnounceGestureScreen> {
                     children: [
                       for (var itemPost
                       in snapshot.data as List<Announce>)
-                        AnnounceGestureItem(announce: itemPost),
+                        AnnounceGestureItem(announce: itemPost, callback: (val) => setState(() => _int = val)),
                     ],
                   )
               )
