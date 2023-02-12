@@ -82,10 +82,13 @@ class FavoriteItem extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Text(
-                        announce.name,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 18),
+                      SizedBox(
+                        width: (MediaQuery.of(context).size.height / 5.8),
+                        child: Text(
+                          announce.name,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w600, fontSize: 18),
+                        ),
                       ),
                       IconButton(
                           //
