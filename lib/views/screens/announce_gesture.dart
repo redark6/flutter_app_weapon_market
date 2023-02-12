@@ -43,7 +43,7 @@ class _AnnounceGestureScreenState extends State<AnnounceGestureScreen> {
                     backgroundColor: Colors.black87,
                     automaticallyImplyLeading: false,
                     leading: IconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.arrow_back_sharp,
                         size: 30,
                       ),
@@ -58,7 +58,7 @@ class _AnnounceGestureScreenState extends State<AnnounceGestureScreen> {
                     children: [
                       for (var itemPost
                       in snapshot.data as List<Announce>)
-                        AnnounceGestureItem(annnounce: itemPost),
+                        AnnounceGestureItem(announce: itemPost),
                     ],
                   )
               )
