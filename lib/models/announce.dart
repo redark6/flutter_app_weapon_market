@@ -12,6 +12,7 @@ class Announce {
   final String email;
   final String username;
   final String profilePictureUrl;
+  final bool favorite;
 
   final String phone;
 
@@ -29,6 +30,7 @@ class Announce {
     required this.username,
     required this.profilePictureUrl,
     required this.phone,
+    required this.favorite,
   });
 
   String getPrice() {
@@ -50,6 +52,7 @@ class Announce {
       username: json['username'] as String? ?? '',
       profilePictureUrl:  '',
       phone: json['phone'] as String? ?? '',
+      favorite: json['favorite'] as bool,
     );
   }
 

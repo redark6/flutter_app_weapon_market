@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:weapon_marketplace/models/announce.dart';
 import 'package:weapon_marketplace/models/create_announce%20.dart';
+import 'package:weapon_marketplace/services/auth_service.dart';
 import 'package:weapon_marketplace/services/secure_storage.dart';
 
 
@@ -13,8 +14,27 @@ class AnnounceService {
   static String apiUrl = "https://192.168.3.2:8443/";
 
   AnnounceService();
+  AuthService authService = AuthService();
 
-  Future<Announce?> getAnnounce(int announceId) async {
+  Future<Announce?> findAnnounce(int announceId) async {
+    String token = "";
+    int userId = authService.getCurrentUser()!.id;
+    token = await SecureStorageService.getInstance()
+        .get("token")
+        .then((value) => token = value.toString());
+    final response = await http.get(
+      Uri.parse("${apiUrl}announce/$announceId/$userId"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'cookie': token,
+      },
+    );
+    if (response.statusCode == 200) {
+      return Announce.fromJson(jsonDecode(response.body));
+    }
+    return null;
+  }
+  Future<Announce> getAnnounce(int announceId) async {
     String token = "";
     token = await SecureStorageService.getInstance()
         .get("token")
@@ -26,20 +46,20 @@ class AnnounceService {
         'cookie': token,
       },
     );
-    if (response.statusCode == 200) {
-      return Announce.fromJson(jsonDecode(response.body));
-    }
-    return null;
+    return Announce.fromJson(jsonDecode(response.body));
+
   }
 
+
   Future<List<Announce>> getAnnounces(Search search) async {
+    int userId = authService.getCurrentUser()!.id;
     List<Announce> announces = [];
     String token = "";
     token = await SecureStorageService.getInstance()
         .get("token")
         .then((value) => token = value.toString());
     final response = await http.post(
-        Uri.parse("${apiUrl}announce/search"),
+        Uri.parse("${apiUrl}announce/search/$userId"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'cookie': token,
@@ -123,6 +143,24 @@ class AnnounceService {
     return false;
   }
 
+  Future<bool> addFavorite(int announceId, int userId) async {
+    String token = "";
+    token = await SecureStorageService.getInstance()
+        .get("token")
+        .then((value) => token = value.toString());
+    final response = await http.post(
+      Uri.parse("${apiUrl}announce/add-to-favorite/$announceId/$userId",),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'cookie': token,
+      },
+    );
+    if (response.statusCode == 200) {
+      return true;
+    }
+    return false;
+  }
+
   Future<Announce?> postAnnounce(CreateAnnounce createAnnounce, int userId,
       File image) async {
     String token = "";
@@ -164,7 +202,7 @@ class AnnounceService {
       return Announce.fromJson(jsonDecode(response.body));
     }
 
-    return await getAnnounce(announceId);
+    return await findAnnounce(announceId);
   }
 
 

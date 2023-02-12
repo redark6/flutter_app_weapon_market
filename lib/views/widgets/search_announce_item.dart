@@ -14,6 +14,7 @@ class SearchAnnounceItem extends StatelessWidget {
     required this.announce,
   }) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
     DateService dateService = DateService();
@@ -53,13 +54,6 @@ class SearchAnnounceItem extends StatelessWidget {
                                     ),
                             ),
                           ),
-                        ),
-                        Positioned(
-                          right: 0,
-                          child: IconButton(
-                              color: Colors.black,
-                              icon: const Icon(Icons.star_border_outlined),
-                              onPressed: () => {print("rien pr le moment")}),
                         ),
                       ],
                     )),
