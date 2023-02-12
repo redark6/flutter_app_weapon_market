@@ -51,7 +51,7 @@ class _AccountScreenState extends State<AccountScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => UserAnnounceScreen(userId: 1,)));
+                                    builder: (context) => UserAnnounceScreen(userId: user != null ? user.id : 1,)));
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(top: 15,bottom: 15,left: 10, right: 10),

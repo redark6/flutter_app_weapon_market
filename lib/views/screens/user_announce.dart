@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:weapon_marketplace/models/announce.dart';
+import 'package:weapon_marketplace/services/auth_service.dart';
 
+import '../../models/search.dart';
+import '../../models/user.dart';
+import '../../services/announce_service.dart';
 import '../../web_services/controllers/favorite_controller.dart';
 import '../widgets/user_announce_item.dart';
 
@@ -17,15 +21,17 @@ class UserAnnounceScreen extends StatefulWidget {
 class _UserAnnounceScreenState extends State<UserAnnounceScreen> {
 
   FavoriteController favoriteAnnounceController = FavoriteController();
-  late Future<List<Announce>> favoriteAnnounce;
+  late Future<List<Announce>> userAnnounces;
+
 
   @override
   Widget build(BuildContext context) {
-
-    favoriteAnnounce = favoriteAnnounceController.getFavoriteAnnounces();
-
+    AnnounceService announceService = AnnounceService();
+    AuthService authService = AuthService();
+    userAnnounces = announceService.getAnnounces(Search(null, null, null, null, widget.userId));
+    User? user = authService.getCurrentUser();
     return FutureBuilder(
-        future: favoriteAnnounce,
+        future: userAnnounces,
         builder: (BuildContext context,
             AsyncSnapshot<List<Announce>> snapshot) {
           return snapshot.data != null
@@ -36,7 +42,7 @@ class _UserAnnounceScreenState extends State<UserAnnounceScreen> {
                     backgroundColor: Colors.black87,
                     automaticallyImplyLeading: false,
                     leading: IconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.arrow_back_sharp,
                         size: 30,
                       ),
@@ -49,33 +55,33 @@ class _UserAnnounceScreenState extends State<UserAnnounceScreen> {
                   ),
                   body: Column(
                     children: [
-                      Container(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10),
-                          child: Row(
-                            children: [
-                              CircleAvatar(
-                                radius: 35, // Image radius
-                                backgroundImage: AssetImage('lib/assets/images/no_image.jpeg'),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10),
+                        child: Row(
+                          children:  [
+                            const CircleAvatar(
+                              radius: 35, // Image radius
+                              backgroundImage: AssetImage('lib/assets/images/no_image.jpeg'),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: Text(user != null ? user.username : "Nom d'utilisateur",
+                                  style: const TextStyle(color: Colors.black, fontSize: 20.0,fontWeight: FontWeight.bold)
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 10),
-                                child: Text("Nom du vendeur",
-                                    style: TextStyle(color: Colors.black, fontSize: 20.0,fontWeight: FontWeight.bold)
-                                ),
-                              )
-                            ],
-                          ),
+                            )
+                          ],
                         ),
                       ),
                       Expanded(
                         // The ListView
                         child: GridView.count(
                           crossAxisCount: 2,
+                          childAspectRatio: MediaQuery.of(context).size.width /
+                              (MediaQuery.of(context).size.height / 1.3),
                           children: [
                             for (var itemPost
                             in snapshot.data as List<Announce>)
-                              UserAnnounceItem(annnounce: itemPost),
+                              UserAnnounceItem(announce: itemPost),
                           ],
                         ),
                       ),

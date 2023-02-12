@@ -25,14 +25,14 @@ class _AnnounceGestureScreenState extends State<AnnounceGestureScreen> {
     _int = value,
   });
 
-  AnnounceService favoriteAnnounceController = AnnounceService();
+  AnnounceService announceService = AnnounceService();
   AuthService authService = AuthService();
   late Future<List<Announce>> userAnnounces;
 
   @override
   Widget build(BuildContext context) {
     final User? user = authService.getCurrentUser();
-    userAnnounces = favoriteAnnounceController.getAnnounces(Search(null, null, null, null, user != null ? user.id : 0));
+    userAnnounces = announceService.getAnnounces(Search(null, null, null, null, user != null ? user.id : 0));
 
 
     return FutureBuilder(
