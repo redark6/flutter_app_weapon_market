@@ -1,13 +1,9 @@
 import 'dart:convert';
-import 'dart:io';
-import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'package:weapon_marketplace/models/announce.dart';
-import 'package:weapon_marketplace/models/sign_up.dart';
 import 'package:weapon_marketplace/services/secure_storage.dart';
 
-import '../models/sign_in.dart';
-import '../models/user.dart';
+import '../models/search.dart';
 
 
 class AnnounceService {
@@ -27,13 +23,37 @@ class AnnounceService {
         'cookie': token,
       },
     );
-
-    print(token);
-    print(response.statusCode);
-
     if(response.statusCode == 200 ){
       return Announce.fromJson(jsonDecode(response.body));
     }
     return null;
+  }
+
+  Future<List<Announce>> getAnnounces(Search search) async {
+    List<Announce> announces = [];
+    String token = "";
+    token = await SecureStorageService.getInstance()
+        .get("token")
+        .then((value) => token = value.toString());
+    final response = await http.post(
+      Uri.parse(apiUrl + "announce/search",),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'cookie': token,
+      },
+      body:  jsonEncode({
+        'title': search.title ?? '',
+        'regionId': search.regionId ?? null,
+        'maxPrice': search.maxPrice ?? 0,
+        'minPrice': search.minPrice ?? 0,
+        'userId': search.userId ?? null,
+        })
+    );
+    if(response.statusCode == 200 ){
+      List tmpList = json.decode(response.body) as List;
+      for (var element in tmpList) { announces.add(Announce.fromJson(element)); }
+      return announces;
+    }
+    return announces;
   }
 }

@@ -9,7 +9,7 @@ class FavoriteController with ChangeNotifier {
 
   Future<List<Announce>> getFavoriteAnnounces() async {
 
-    List<Announce> announces = List.generate(1000, (index) {
+    List<Announce> announces = List.generate(2, (index) {
       return Announce(
         id: index,
         name: 'annonce lambda',
@@ -27,26 +27,6 @@ class FavoriteController with ChangeNotifier {
     });
 
     return announces;
-/*
-    final response = await postService.fetchHomeTimeline();
-
-    Map<String, dynamic> map = jsonDecode(response.body);
-    List<dynamic> listResponse = map['data'] ;
-
-    for(int i=0; i<listResponse.length; i++) {
-      Map<String, dynamic> mapPost = listResponse[i];
-      PostData postData = PostData.fromJson(mapPost);
-      posts.add(postData);
-    };
-
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      print('success fetch home timeline');
-      return posts;
-    } else {
-      throw Exception('Failed to fetch home timeline');
-    }
-
- */
 
   }
 }

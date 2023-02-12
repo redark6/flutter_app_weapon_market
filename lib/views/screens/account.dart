@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:weapon_marketplace/services/auth_service.dart';
 import 'package:weapon_marketplace/views/screens/profil.dart';
 import 'package:weapon_marketplace/views/screens/signup.dart';
+import '../../models/user.dart';
+
 
 import 'announce_gesture.dart';
 import 'favorite_announce.dart';
@@ -17,13 +20,15 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
-
+  AuthService authService = AuthService();
   @override
   Widget build(BuildContext context) {
+    final User? user = authService.getCurrentUser();
+
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 30.0),
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -51,17 +56,17 @@ class _AccountScreenState extends State<AccountScreen> {
                           child: Padding(
                             padding: const EdgeInsets.only(top: 15,bottom: 15,left: 10, right: 10),
                             child: Row(
-                              children: const [
-                                CircleAvatar(
+                              children: [
+                                const CircleAvatar(
                                   radius: 30, // Image radius
                                   backgroundImage: AssetImage('lib/assets/images/no_image.jpeg'),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(left: 10),
-                                  child: Text('nom vendeur'),
+                                  padding: const EdgeInsets.only(left: 10),
+                                  child: Text(user != null ? user.username : 'nom vendeur'),
                                 ),
-                                Spacer(),
-                                Icon(
+                                const Spacer(),
+                                const Icon(
                                   Icons.arrow_forward_sharp,
                                   color: Colors.deepOrange,
                                   size: 25,

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:weapon_marketplace/models/announce.dart';
+import 'package:weapon_marketplace/services/announce_service.dart';
+import 'package:weapon_marketplace/services/auth_service.dart';
 
+import '../../models/search.dart';
+import '../../models/user.dart';
 import '../../web_services/controllers/favorite_controller.dart';
 import '../widgets/announce_gesture_item.dart';
 
@@ -16,16 +20,19 @@ class AnnounceGestureScreen extends StatefulWidget {
 
 class _AnnounceGestureScreenState extends State<AnnounceGestureScreen> {
 
-  FavoriteController favoriteAnnounceController = FavoriteController();
-  late Future<List<Announce>> favoriteAnnounce;
+  AnnounceService favoriteAnnounceController = AnnounceService();
+  AuthService authService = AuthService();
+  late Future<List<Announce>> userAnnounces;
 
   @override
   Widget build(BuildContext context) {
-
-    favoriteAnnounce = favoriteAnnounceController.getFavoriteAnnounces();
+    final User? user = authService.getCurrentUser();
+    if(user != null) {
+      userAnnounces = favoriteAnnounceController.getAnnounces(Search(null, null, null, null, user.id));
+    }
 
     return FutureBuilder(
-        future: favoriteAnnounce,
+        future: userAnnounces,
         builder: (BuildContext context,
             AsyncSnapshot<List<Announce>> snapshot) {
           return snapshot.data != null
