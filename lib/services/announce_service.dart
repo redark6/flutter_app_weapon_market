@@ -46,7 +46,7 @@ class AnnounceService {
         'regionId': search.regionId,
         'maxPrice': search.maxPrice ?? 0,
         'minPrice': search.minPrice ?? 0,
-        'userId': search.userId,
+        'userId': search.userId ?? 0,
         })
     );
     if(response.statusCode == 200 ){
