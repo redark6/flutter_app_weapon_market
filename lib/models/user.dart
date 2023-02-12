@@ -6,6 +6,7 @@ class User {
   final String username;
   final bool enabled;
   final String profilePictureUrl;
+  final String phone;
 
   const User({
     required this.id,
@@ -14,6 +15,7 @@ class User {
     required this.username,
     required this.enabled,
     required this.profilePictureUrl,
+    required this.phone,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -24,6 +26,7 @@ class User {
       username: json['username'] as String? ?? '',
       enabled: json['enabled'] as bool? ?? true,
       profilePictureUrl: json['profilePictureUrl'] as String? ?? '',
+      phone: json['phone'] as String? ?? '',
     );
   }
 

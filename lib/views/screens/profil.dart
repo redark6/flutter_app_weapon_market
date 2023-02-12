@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:weapon_marketplace/services/auth_service.dart';
+
+import '../../models/user.dart';
 
 
 class ProfilScreen extends StatefulWidget {
-  ProfilScreen({
+  const ProfilScreen({
     Key? key,
   }) : super(key: key);
 
@@ -11,16 +14,18 @@ class ProfilScreen extends StatefulWidget {
 }
 
 class _ProfilScreenState extends State<ProfilScreen> {
-
+  AuthService authService = AuthService();
   @override
   Widget build(BuildContext context) {
+    final User? user = authService.getCurrentUser();
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.black87,
           automaticallyImplyLeading: false,
           leading: IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back_sharp,
               size: 30,
             ),
@@ -32,7 +37,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
           elevation: 2,
         ),
         body: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 30.0),
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -50,15 +55,15 @@ class _ProfilScreenState extends State<ProfilScreen> {
                       child: Padding(
                         padding: const EdgeInsets.only(top: 15,bottom: 15,left: 10, right: 10),
                         child: Row(
-                          children: const [
-                            CircleAvatar(
+                          children:  [
+                            const CircleAvatar(
                               radius: 48, // Image radius
                               backgroundImage: AssetImage('lib/assets/images/no_image.jpeg'),
                             ),
                             Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text('nom vendeur',
-                                  style: TextStyle(color: Colors.black, fontSize: 25.0,fontWeight: FontWeight.bold),
+                              padding: const EdgeInsets.only(left: 10),
+                              child: Text(user != null ? user.username : "nom d'utilisateur",
+                                  style: const TextStyle(color: Colors.black, fontSize: 25.0,fontWeight: FontWeight.bold),
                               ),
                             ),
                           ],
@@ -68,8 +73,8 @@ class _ProfilScreenState extends State<ProfilScreen> {
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 5, bottom: 15),
+              const Padding(
+                padding: EdgeInsets.only(top: 5, bottom: 15),
                 child: Divider(
                   color: Colors.black,
                   height: 2,
@@ -84,16 +89,16 @@ class _ProfilScreenState extends State<ProfilScreen> {
                       child: Padding(
                         padding: const EdgeInsets.only(top: 15,bottom: 15,left: 10, right: 10),
                         child: Row(
-                          children: const [
-                            Icon(
+                          children: [
+                            const Icon(
                               Icons.person,
                               color: Colors.deepOrange,
                               size: 25,
                             ),
                             Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text('nom utilisateur',
-                                style: TextStyle(color: Colors.black, fontSize: 15.0,fontWeight: FontWeight.bold),
+                              padding: const EdgeInsets.only(left: 10),
+                              child: Text(user != null ? user.username : "nom d'utilisateur",
+                                style: const TextStyle(color: Colors.black, fontSize: 15.0,fontWeight: FontWeight.bold),
                               ),
                             ),
                           ],
@@ -111,16 +116,16 @@ class _ProfilScreenState extends State<ProfilScreen> {
                       child: Padding(
                         padding: const EdgeInsets.only(top: 15,bottom: 15,left: 10, right: 10),
                         child: Row(
-                          children: const [
-                            Icon(
+                          children: [
+                            const Icon(
                               Icons.phone_enabled,
                               color: Colors.deepOrange,
                               size: 25,
                             ),
                             Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text('0645821584',
-                                style: TextStyle(color: Colors.black, fontSize: 15.0,fontWeight: FontWeight.bold),
+                              padding: const EdgeInsets.only(left: 10),
+                              child: Text(user != null ? user.phone : '0645821584',
+                                style: const TextStyle(color: Colors.black, fontSize: 15.0,fontWeight: FontWeight.bold),
                               ),
                             ),
                           ],
@@ -138,16 +143,16 @@ class _ProfilScreenState extends State<ProfilScreen> {
                       child: Padding(
                         padding: const EdgeInsets.only(top: 15,bottom: 15,left: 10, right: 10),
                         child: Row(
-                          children: const [
-                            Icon(
+                          children:  [
+                            const Icon(
                               Icons.mail,
                               color: Colors.deepOrange,
                               size: 25,
                             ),
                             Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text('truc@truc.fr',
-                                style: TextStyle(color: Colors.black, fontSize: 15.0,fontWeight: FontWeight.bold),
+                              padding: const EdgeInsets.only(left: 10),
+                              child: Text(user != null ? user.email: 'truc@truc.fr',
+                                style: const TextStyle(color: Colors.black, fontSize: 15.0,fontWeight: FontWeight.bold),
                               ),
                             ),
                           ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weapon_marketplace/views/screens/main.dart';
 
 import '../../services/auth_service.dart';
 import '../../web_services/controllers/authentication_controller.dart';
@@ -177,10 +178,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     password: passwordEditingController.text, username: usernameEditingController.text)).then((value) =>
                                     {
                                       if(authService.isLoggedIn()) {
-                                        announceService.getAnnounce(7).then((value) => {
-                                          if(value != null){
-                                          Navigator.push(context,MaterialPageRoute(builder: (context) => AnnounceScreen(announce: value,)))
-                                        }})
+                                          Navigator.push(context,MaterialPageRoute(builder: (context) => const MainScreen()))
                                       }
                                     });
 

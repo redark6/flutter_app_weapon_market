@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weapon_marketplace/views/screens/main.dart';
 import 'package:weapon_marketplace/views/screens/signup.dart';
 
 import '../../services/announce_service.dart';
@@ -152,17 +153,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                     authService.logIn(SignIn(username: usernameEditingController.text, password: passwordEditingController.text)).whenComplete(() =>
                                     {
                                       if(authService.isLoggedIn()) {
-                                        announceService.getAnnounce(7).then((value) => {
-                                          if(value != null){
-                                            Navigator.push(context,MaterialPageRoute(builder: (context) => AnnounceScreen(announce: value,)))
-                                          }})
+                                            Navigator.push(context,MaterialPageRoute(builder: (context) => const MainScreen()))
                                       }
                                     });
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.only(top: 15,bottom: 15,left: 10, right: 10),
                                     child: Row(
-                                      children: [
+                                      children: const [
                                         Text('Se connecter'),
                                         Spacer(),
                                         Icon(

@@ -140,8 +140,11 @@ class AuthService {
     currentUser = user;
   }
 
+  User? getCurrentUser() {
+    return currentUser;
+  }
+
   bool isLoggedIn() {
-    print(currentUser);
     return currentUser != null;
   }
 }
