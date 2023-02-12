@@ -7,7 +7,6 @@ import 'package:weapon_marketplace/models/create_announce%20.dart';
 import 'package:weapon_marketplace/services/announce_service.dart';
 import 'package:weapon_marketplace/services/auth_service.dart';
 
-import '../../models/announce.dart';
 import '../../models/user.dart';
 import 'announce.dart';
 
@@ -51,7 +50,6 @@ class _PublishAnnounceState extends State<PublishAnnounceScreen> {
       maxWidth: 1800,
       maxHeight: 1800,
     );
-    print(title);
     if (pickedFile != null) {
       setState(() {
         imageFile = File(pickedFile.path);

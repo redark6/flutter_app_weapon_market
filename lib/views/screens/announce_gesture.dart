@@ -18,10 +18,9 @@ class AnnounceGestureScreen extends StatefulWidget {
 }
 
 class _AnnounceGestureScreenState extends State<AnnounceGestureScreen> {
-   int _int = 0;
 
   set callback(int value) => setState(() => {
-    _int = value,
+
   });
 
   AnnounceService announceService = AnnounceService();
@@ -61,7 +60,7 @@ class _AnnounceGestureScreenState extends State<AnnounceGestureScreen> {
                     children: [
                       for (var itemPost
                       in snapshot.data as List<Announce>)
-                        AnnounceGestureItem(announce: itemPost, callback: (val) => setState(() => _int = val)),
+                        AnnounceGestureItem(announce: itemPost, callback: (val) => setState(() => {})),
                     ],
                   )
               )

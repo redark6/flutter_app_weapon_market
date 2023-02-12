@@ -136,11 +136,11 @@ class AnnounceService {
         'cookie': token,
       },
       body: jsonEncode({
-        'name': createAnnounce.name ?? '',
-        'content': createAnnounce.content ?? '',
-        'location': createAnnounce.location ?? '',
-        'category': createAnnounce.category ?? '',
-        'price': createAnnounce.price ?? '',
+        'name': createAnnounce.name,
+        'content': createAnnounce.content,
+        'location': createAnnounce.location,
+        'category': createAnnounce.category,
+        'price': createAnnounce.price,
       }),
     );
     if (response.statusCode != 200) {

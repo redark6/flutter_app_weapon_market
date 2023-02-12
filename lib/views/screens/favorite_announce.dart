@@ -23,11 +23,8 @@ class _FavoriteAnnounceScreenState extends State<FavoriteAnnounceScreen> {
   AuthService authService = AuthService();
   AnnounceService annonceService = AnnounceService();
   late Future<List<Announce>> favoriteAnnounce;
-  int _int = 0;
 
-  set callback(int value) => setState(() => {
-    _int = value,
-  });
+  set callback(int value) => setState(() => {});
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +58,7 @@ class _FavoriteAnnounceScreenState extends State<FavoriteAnnounceScreen> {
                         children: [
                           for (var itemPost
                           in snapshot.data as List<Announce>)
-                            FavoriteItem(announce: itemPost, callback: (val) => setState(() => _int = val)),
+                            FavoriteItem(announce: itemPost, callback: (val) => setState(() => {})),
                         ],
                       )
                   )
