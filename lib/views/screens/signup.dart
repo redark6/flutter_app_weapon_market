@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:weapon_marketplace/views/screens/main.dart';
 
 import '../../services/auth_service.dart';
@@ -24,7 +27,24 @@ class _SignupScreenState extends State<SignupScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final AuthService authService = AuthService();
   final AnnounceService announceService = AnnounceService();
+  File? imageFile;
+  String? username, password, email;
 
+  _getFromGallery() async {
+    PickedFile? pickedFile = await ImagePicker().getImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      setState(() {
+        imageFile = File(pickedFile.path);
+        username = usernameEditingController.text;
+        password = passwordEditingController.text;
+        email = emailEditingController.text;
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -155,6 +175,59 @@ class _SignupScreenState extends State<SignupScreen> {
                                   },
                                 ),
                               ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                                child: Column(
+                                  children: [
+                                    imageFile != null
+                                        ? Image.file(
+                                      imageFile!,
+                                      width: double.infinity,
+                                      height: 160,
+                                      fit: BoxFit.cover,
+                                    )
+                                        : const Text(
+                                      "Vous devez choirir une image",
+                                      style: TextStyle(color: Colors.red),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.black87,
+                                          ),
+                                          onPressed: () {
+                                            _getFromGallery();
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 15,
+                                                bottom: 15,
+                                                left: 10,
+                                                right: 10),
+                                            child: Row(
+                                              children: const [
+                                                Text('Ouvrir la gallerie'),
+                                                Spacer(),
+                                                Icon(
+                                                  Icons.photo_library_rounded,
+                                                  color: Colors.deepOrange,
+                                                  size: 25,
+                                                ),
+                                              ],
+                                            ),
+                                          )),
+                                    )
+                                  ],
+                                ),
+                              ),
+
                             ]
                         ),
                       ),
@@ -169,8 +242,12 @@ class _SignupScreenState extends State<SignupScreen> {
                                     backgroundColor: Colors.black87,
                                   ),
                                   onPressed: () {
+                                    if (_formKey.currentState!.validate() == false ||
+                                    imageFile == null) {
+                                      return;
+                                    }
                                     authService.register(SignUp(email: emailEditingController.text,
-                                    password: passwordEditingController.text, username: usernameEditingController.text)).then((value) =>
+                                    password: passwordEditingController.text, username: usernameEditingController.text), imageFile!).then((value) =>
                                     {
                                       if(authService.isLoggedIn()) {
                                           Navigator.push(context,MaterialPageRoute(builder: (context) => const MainScreen()))

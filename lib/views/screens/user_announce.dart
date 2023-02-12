@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:full_screen_image_null_safe/full_screen_image_null_safe.dart';
 import 'package:weapon_marketplace/models/announce.dart';
 import 'package:weapon_marketplace/services/auth_service.dart';
 
@@ -57,9 +60,20 @@ class _UserAnnounceScreenState extends State<UserAnnounceScreen> {
                         padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10),
                         child: Row(
                           children:  [
-                            const CircleAvatar(
-                              radius: 35, // Image radius
-                              backgroundImage: AssetImage('lib/assets/images/no_image.jpeg'),
+                            SizedBox(
+                              height: 300,
+                              width: double.infinity,
+                              child: FittedBox(
+                                fit: BoxFit.fitHeight,
+                                child:
+                                FullScreenWidget(
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(3.0),
+                                    child: user!.profilePictureUrl.isEmpty ?
+                                  Image.asset('lib/assets/images/no_image.jpeg'):  Image.memory(base64.decode(user!.profilePictureUrl)),
+                                  ),
+                                ),
+                              ),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(left: 10),

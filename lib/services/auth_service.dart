@@ -66,7 +66,7 @@ class AuthService {
     return response;
   }
 
-  Future<http.Response> register(SignUp user) async {
+  Future<http.Response> register(SignUp user, File image) async {
     final response = await http.post(
       Uri.parse('${apiUrl}users/register'),
       headers: <String, String>{
@@ -78,8 +78,16 @@ class AuthService {
         'email': user.email,
       }),
     );
+
     if(response.statusCode == 200){
       await logIn(SignIn(username: user.username, password: user.password));
+      int userId = getCurrentUser()!.id;
+
+      var request = http.MultipartRequest('POST',
+        Uri.parse("${apiUrl}users/$userId/add-image/"),);
+      request.files.add(await http.MultipartFile.fromPath('image', image.path));
+
+      final responseImage = await request.send();
     }
     return response;
   }
