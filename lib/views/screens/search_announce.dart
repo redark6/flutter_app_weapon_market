@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:weapon_marketplace/models/announce.dart';
 import 'package:weapon_marketplace/models/search.dart';
 import 'package:weapon_marketplace/services/announce_service.dart';
-
-import '../../web_services/controllers/favorite_controller.dart';
 import '../widgets/search_announce_item.dart';
 
 class SearchAnnounceScreen extends StatefulWidget {
@@ -21,17 +19,15 @@ class _SearchAnnounceScreenState extends State<SearchAnnounceScreen> {
   AnnounceService announceService = AnnounceService();
   late Future<List<Announce>> favoriteAnnounce;
 
-  static const _pageSize = 1;
-  final TextEditingController emailController = TextEditingController();
+  final TextEditingController titleController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    print(widget.title);
     favoriteAnnounce = announceService.getAnnounces(Search(widget.title, null, null, null, null));
-    emailController.text = (widget.title ?? '')!;
+    titleController.text = (widget.title ?? '');
 
-    _search() {
-      Navigator.push(context,MaterialPageRoute(builder: (context) => SearchAnnounceScreen(title: emailController.text,)));
+    search() {
+      Navigator.push(context,MaterialPageRoute(builder: (context) => SearchAnnounceScreen(title: titleController.text,)));
     }
     return FutureBuilder(
         future: favoriteAnnounce,
@@ -49,14 +45,14 @@ class _SearchAnnounceScreenState extends State<SearchAnnounceScreen> {
                              Expanded(
                                 flex: 8,
                                 child: TextField(
-                                  controller: emailController,
+                                  controller: titleController,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     labelText: 'Rechercher un bien ...',
                                     hintText: 'Rechercher un bien ...',
                                   ),
                                   onSubmitted: (value) {
-                                    _search();
+                                    search();
                                   },
                                 ),
                             ),
@@ -67,7 +63,7 @@ class _SearchAnnounceScreenState extends State<SearchAnnounceScreen> {
                                       color: Colors.black,
                                       icon: const Icon(Icons.search),
                                       onPressed: () => {
-                                        _search()
+                                        search()
                                       }
                                   ),
                                 )
@@ -86,7 +82,7 @@ class _SearchAnnounceScreenState extends State<SearchAnnounceScreen> {
                             in snapshot.data as List<Announce>)
                               SearchAnnounceItem(announce: itemPost),
                           ],
-                        ) : Text("Pas d'annonces trouvés"),
+                        ) : const Text("Pas d'annonces trouvés"),
                       ),
                     ],
                   )

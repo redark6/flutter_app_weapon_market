@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:weapon_marketplace/models/announce.dart';
+import 'package:weapon_marketplace/models/create_announce%20.dart';
 import 'package:weapon_marketplace/services/secure_storage.dart';
 
 import '../models/search.dart';
@@ -114,6 +115,31 @@ class AnnounceService {
       return true;
     }
     return false;
+  }
+
+  Future<Announce?> postAnnounce(CreateAnnounce createAnnounce, int userId) async {
+    String token = "";
+    token = await SecureStorageService.getInstance()
+        .get("token")
+        .then((value) => token = value.toString());
+    final response = await http.post(
+      Uri.parse("${apiUrl}announce/add/$userId"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'cookie': token,
+      },
+      body: jsonEncode({
+        'name': createAnnounce.name ?? '',
+        'content': createAnnounce.content ?? '',
+        'location': createAnnounce.location ?? '',
+        'category': createAnnounce.category ?? '',
+        'price': createAnnounce.price ?? '',
+      }),
+    );
+    if(response.statusCode == 200 ){
+      return Announce.fromJson(jsonDecode(response.body));
+    }
+    return null;
   }
 
 
