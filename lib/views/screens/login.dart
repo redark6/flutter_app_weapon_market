@@ -3,7 +3,6 @@ import 'package:weapon_marketplace/views/screens/main.dart';
 import 'package:weapon_marketplace/views/screens/signup.dart';
 
 import '../../services/announce_service.dart';
-import '../../web_services/controllers/authentication_controller.dart';
 
 import 'package:weapon_marketplace/models/sign_in.dart';
 import 'package:weapon_marketplace/services/auth_service.dart';
@@ -19,9 +18,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  AuthenticationController authenticationController =
-  AuthenticationController();
-
   TextEditingController usernameEditingController = TextEditingController();
   TextEditingController passwordEditingController = TextEditingController();
 

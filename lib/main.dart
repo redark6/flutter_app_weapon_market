@@ -17,7 +17,7 @@ class MarketPlaceApp extends StatelessWidget {
     HttpOverrides.global = MyHttpOverrides();
 
     return const MaterialApp(
-      title: 'Weaponry',
+      title: 'Airsoft Marketplace',
       home: LoginScreen(),
       debugShowCheckedModeBanner: false,
     );

@@ -5,7 +5,6 @@ import 'package:weapon_marketplace/services/auth_service.dart';
 import '../../models/search.dart';
 import '../../models/user.dart';
 import '../../services/announce_service.dart';
-import '../../web_services/controllers/favorite_controller.dart';
 import '../widgets/user_announce_item.dart';
 
 class UserAnnounceScreen extends StatefulWidget {
@@ -20,7 +19,6 @@ class UserAnnounceScreen extends StatefulWidget {
 
 class _UserAnnounceScreenState extends State<UserAnnounceScreen> {
 
-  FavoriteController favoriteAnnounceController = FavoriteController();
   late Future<List<Announce>> userAnnounces;
 
 

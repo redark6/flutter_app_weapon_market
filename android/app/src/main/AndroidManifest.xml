@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="fr.egsi.weapon_marketplace">
    <application
-        android:label="weapon_marketplace"
+        android:label="Airsoft MarketPlace"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:weapon_marketplace/views/screens/main.dart';
 
 import '../../services/auth_service.dart';
-import '../../web_services/controllers/authentication_controller.dart';
 import 'package:weapon_marketplace/models/sign_up.dart';
 import 'package:weapon_marketplace/services/announce_service.dart';
 
@@ -17,8 +16,6 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  AuthenticationController authenticationController =
-  AuthenticationController();
 
   TextEditingController usernameEditingController = TextEditingController();
   TextEditingController passwordEditingController = TextEditingController();
