@@ -53,7 +53,7 @@ class UserAnnounceItem extends StatelessWidget {
                     Row(
                       children: [
                         SizedBox(
-                          width: 160.0,
+                          width: (MediaQuery.of(context).size.height / 5.5),
                           child: Text(
                             announce.name,
                             style: const TextStyle(

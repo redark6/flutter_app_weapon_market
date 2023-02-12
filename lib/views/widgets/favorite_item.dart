@@ -15,25 +15,25 @@ class FavoriteItem extends StatelessWidget {
     Key? key,
     required this.announce,
     required this.callback,
-
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     AnnounceService announceService = AnnounceService();
     DateService dateService = DateService();
 
     Widget cancelButton = TextButton(
       child: const Text("Annuler"),
-      onPressed:  () {
+      onPressed: () {
         Navigator.of(context).pop();
       },
     );
     Widget continueButton = TextButton(
       child: const Text("Continuer"),
-      onPressed:  () {
-        announceService.deleteFavorite(announce.id, announce.userId).then((value) => {callback(1), Navigator.of(context).pop()});
+      onPressed: () {
+        announceService
+            .deleteFavorite(announce.id, announce.userId)
+            .then((value) => {callback(1), Navigator.of(context).pop()});
       },
     );
     AlertDialog alert = AlertDialog(
@@ -88,31 +88,36 @@ class FavoriteItem extends StatelessWidget {
                             fontWeight: FontWeight.w600, fontSize: 18),
                       ),
                       IconButton(
-                        //
+                          //
                           color: Colors.deepOrange,
                           icon: const Icon(Icons.star),
                           onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return alert;
-                            },
-                          );
-                        }
-                      ),
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return alert;
+                              },
+                            );
+                          }),
                     ],
                   ),
                   Text(
                     announce.getPrice(),
-                    style:
-                    const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w600, fontSize: 18),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
-                    child: Text(
-                      announce.location,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.normal, fontSize: 14),
+                    child: SizedBox(
+                      width: (MediaQuery.of(context).size.height / 4),
+                      child: Text(
+                        overflow: TextOverflow.fade,
+                        softWrap: true,
+                        maxLines: 2,
+                        announce.location,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.normal, fontSize: 14),
+                      ),
                     ),
                   ),
                   Text(
