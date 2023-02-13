@@ -20,15 +20,17 @@ class _SearchAnnounceScreenState extends State<SearchAnnounceScreen> {
   late Future<List<Announce>> favoriteAnnounce;
 
   final TextEditingController titleController = TextEditingController();
+  String title = '';
 
   @override
   Widget build(BuildContext context) {
-    favoriteAnnounce = announceService.getAnnounces(Search(widget.title, null, null, null, null));
-    titleController.text = (widget.title ?? '');
+    favoriteAnnounce = announceService.getAnnounces(Search(title, null, null, null, null));
+    titleController.text = title;
 
     search() {
-      Navigator.push(context,MaterialPageRoute(builder: (context) => SearchAnnounceScreen(title: titleController.text,)));
+      setState(() => {title = titleController.text});
     }
+
     return FutureBuilder(
         future: favoriteAnnounce,
         builder: (BuildContext context,
