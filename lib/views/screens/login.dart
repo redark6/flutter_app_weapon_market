@@ -21,17 +21,25 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController usernameEditingController = TextEditingController();
   TextEditingController passwordEditingController = TextEditingController();
 
+  bool failedAttempt = false;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isSecret = true;
   final AuthService authService = AuthService();
   final AnnounceService announceService = AnnounceService();
 
+  failedAttemptChange() {
+    setState(() {
+      failedAttempt = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+          resizeToAvoidBottomInset : false,
+
           appBar: AppBar(
             backgroundColor: Colors.black87,
             automaticallyImplyLeading: false,
@@ -70,6 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 child: TextFormField(
                                   controller: usernameEditingController,
                                   cursorColor: Colors.deepOrange,
+                                  textInputAction: TextInputAction.next,
                                   decoration: InputDecoration(
                                     prefixIcon: const Icon(Icons.person),
                                     hintText: "Nom d'utilisateur",
@@ -89,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   // The validator receives the text that the user has entered.
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'Please enter some text';
+                                      return 'Le champ ne doit pas être vide';
                                     }
                                     return null;
                                   },
@@ -101,6 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   controller: passwordEditingController,
                                   obscureText: _isSecret,
                                   cursorColor: Colors.deepOrange,
+                                  textInputAction: TextInputAction.done,
                                   decoration: InputDecoration(
                                     prefixIcon:const  Icon(Icons.lock),
                                     hintText: "Mot de passe",
@@ -126,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   // The validator receives the text that the user has entered.
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'Please enter some text';
+                                      return 'Le champ ne doit pas être vide';
                                     }
                                     return null;
                                   },
@@ -134,6 +144,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ]
                         ),
+                      ),
+                      if(failedAttempt)const Padding(
+                        padding: EdgeInsets.only(top: 15,bottom: 15,left: 10, right: 10),
+                        child: Text("Erreur lors de la connexion",
+                          style: TextStyle(color: Colors.red))
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 15),
@@ -147,8 +162,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                   onPressed: () {
                                     authService.logIn(SignIn(username: usernameEditingController.text, password: passwordEditingController.text)).whenComplete(() =>
                                     {
-                                      if(authService.isLoggedIn() == true) {
+                                      if(_formKey.currentState!.validate() == true && authService.isLoggedIn() == true) {
                                             Navigator.push(context,MaterialPageRoute(builder: (context) => const MainScreen()))
+                                      } else {
+                                        failedAttemptChange()
                                       }
                                     });
                                   },

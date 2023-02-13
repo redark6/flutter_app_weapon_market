@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:weapon_marketplace/services/auth_service.dart';
 import 'package:weapon_marketplace/views/screens/login.dart';
 import 'package:weapon_marketplace/views/screens/profil.dart';
-import 'package:weapon_marketplace/views/screens/signup.dart';
 import '../../models/user.dart';
 
 

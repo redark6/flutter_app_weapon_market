@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:weapon_marketplace/models/sign_up.dart';
@@ -42,7 +41,8 @@ class AuthService {
     return user;
   }
 
-  Future<http.Response> logIn(SignIn user) async {
+  Future<http.Response?> logIn(SignIn user) async {
+    isLogged = false;
     var response = await http.post(
       Uri.parse("${apiUrl}login"),
       headers: <String, String>{
@@ -64,11 +64,11 @@ class AuthService {
         isLogged = true;
       }
     }
-
-
-
-    await getLoggedUser(user.username);
-    return response;
+    if(isLogged == true) {
+      await getLoggedUser(user.username);
+      return response;
+    }
+    return null;
   }
 
   Future<http.Response> register(SignUp user, File image) async {
@@ -155,7 +155,7 @@ class AuthService {
   }
 
   bool isLoggedIn() {
-    return isLogged;
+    return isLogged == true;
   }
 
   void logout() {
