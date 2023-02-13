@@ -28,9 +28,21 @@ class _LoginScreenState extends State<LoginScreen> {
   final AuthService authService = AuthService();
   final AnnounceService announceService = AnnounceService();
 
-  failedAttemptChange() {
+  failedAttemptChange(bool failed) {
     setState(() {
-      failedAttempt = true;
+      failedAttempt = failed;
+    });
+  }
+
+  login() {
+    authService.logIn(SignIn(username: usernameEditingController.text, password: passwordEditingController.text)).whenComplete(() =>
+    {
+      if(_formKey.currentState!.validate() == true && authService.isLoggedIn() == true) {
+        failedAttemptChange(false),
+        Navigator.push(context,MaterialPageRoute(builder: (context) => const MainScreen())),
+      } else {
+        failedAttemptChange(true)
+      }
     });
   }
 
@@ -111,6 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   obscureText: _isSecret,
                                   cursorColor: Colors.deepOrange,
                                   textInputAction: TextInputAction.done,
+                                  onFieldSubmitted: (_)=> login(),
                                   decoration: InputDecoration(
                                     prefixIcon:const  Icon(Icons.lock),
                                     hintText: "Mot de passe",
@@ -160,14 +173,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     backgroundColor: Colors.black87,
                                   ),
                                   onPressed: () {
-                                    authService.logIn(SignIn(username: usernameEditingController.text, password: passwordEditingController.text)).whenComplete(() =>
-                                    {
-                                      if(_formKey.currentState!.validate() == true && authService.isLoggedIn() == true) {
-                                            Navigator.push(context,MaterialPageRoute(builder: (context) => const MainScreen()))
-                                      } else {
-                                        failedAttemptChange()
-                                      }
-                                    });
+                                    login();
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.only(top: 15,bottom: 15,left: 10, right: 10),
