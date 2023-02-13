@@ -133,6 +133,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 35),
                                 child: TextFormField(
+                                  keyboardType: TextInputType.emailAddress,
                                   controller: emailEditingController,
                                   cursorColor: Colors.deepOrange,
                                   textInputAction: TextInputAction.next,
