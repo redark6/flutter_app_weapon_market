@@ -38,7 +38,6 @@ class _SearchAnnounceScreenState extends State<SearchAnnounceScreen> {
         builder:
             (BuildContext context, AsyncSnapshot<List<Announce>> snapshot) {
           return WillPopScope(
-
             onWillPop: () async {
               titleController.text = '';
               search();
