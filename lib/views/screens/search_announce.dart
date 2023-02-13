@@ -6,8 +6,10 @@ import '../widgets/search_announce_item.dart';
 
 class SearchAnnounceScreen extends StatefulWidget {
   final String? title;
+
   const SearchAnnounceScreen({
-    Key? key, this.title,
+    Key? key,
+    this.title,
   }) : super(key: key);
 
   @override
@@ -15,7 +17,6 @@ class SearchAnnounceScreen extends StatefulWidget {
 }
 
 class _SearchAnnounceScreenState extends State<SearchAnnounceScreen> {
-
   AnnounceService announceService = AnnounceService();
   late Future<List<Announce>> favoriteAnnounce;
 
@@ -24,7 +25,8 @@ class _SearchAnnounceScreenState extends State<SearchAnnounceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    favoriteAnnounce = announceService.getAnnounces(Search(title, null, null, null, null));
+    favoriteAnnounce =
+        announceService.getAnnounces(Search(title, null, null, null, null));
     titleController.text = title;
 
     search() {
@@ -33,30 +35,38 @@ class _SearchAnnounceScreenState extends State<SearchAnnounceScreen> {
 
     return FutureBuilder(
         future: favoriteAnnounce,
-        builder: (BuildContext context,
-            AsyncSnapshot<List<Announce>> snapshot) {
-          return snapshot.data != null ?
-          SafeArea(
-              child: Scaffold(
-                  body: Column(
+        builder:
+            (BuildContext context, AsyncSnapshot<List<Announce>> snapshot) {
+          return WillPopScope(
+
+            onWillPop: () async {
+              titleController.text = '';
+              search();
+              return false;
+            },
+            child: snapshot.data != null
+                ? SafeArea(
+                    child: Scaffold(
+                        body: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10),
+                        padding: const EdgeInsets.only(
+                            top: 10, bottom: 10, left: 10),
                         child: Row(
                           children: [
-                             Expanded(
-                                flex: 8,
-                                child: TextField(
-                                  controller: titleController,
-                                  decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    labelText: 'Rechercher un bien ...',
-                                    hintText: 'Rechercher un bien ...',
-                                  ),
-                                  onSubmitted: (value) {
-                                    search();
-                                  },
+                            Expanded(
+                              flex: 8,
+                              child: TextField(
+                                controller: titleController,
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'Rechercher un bien ...',
+                                  hintText: 'Rechercher un bien ...',
                                 ),
+                                onSubmitted: (value) {
+                                  search();
+                                },
+                              ),
                             ),
                             Expanded(
                                 flex: 2,
@@ -64,37 +74,37 @@ class _SearchAnnounceScreenState extends State<SearchAnnounceScreen> {
                                   child: IconButton(
                                       color: Colors.black,
                                       icon: const Icon(Icons.search),
-                                      onPressed: () => {
-                                        search()
-                                      }
-                                  ),
-                                )
-                            )
+                                      onPressed: () => {search()}),
+                                ))
                           ],
                         ),
                       ),
                       Expanded(
                         // The ListView
-                        child:  (snapshot.data?.isNotEmpty)! ? GridView.count(
-                          crossAxisCount: 2,
-                          childAspectRatio: MediaQuery.of(context).size.width /
-                              (MediaQuery.of(context).size.height / 1.6),
-                          children: [
-                            for (var itemPost
-                            in snapshot.data as List<Announce>)
-                              SearchAnnounceItem(announce: itemPost),
-                          ],
-                        ) : const Text("Pas d'annonces trouvés"),
+                        child: (snapshot.data?.isNotEmpty)!
+                            ? GridView.count(
+                                crossAxisCount: 2,
+                                childAspectRatio: MediaQuery.of(context)
+                                        .size
+                                        .width /
+                                    (MediaQuery.of(context).size.height / 1.6),
+                                children: [
+                                  for (var itemPost
+                                      in snapshot.data as List<Announce>)
+                                    SearchAnnounceItem(announce: itemPost),
+                                ],
+                              )
+                            : const Text("Pas d'annonces trouvés"),
                       ),
                     ],
-                  )
-              )
-          )
-              : Container(
-              alignment: Alignment.center,
-              child: const CircularProgressIndicator(
-                color: Colors.deepOrange,
-              ));
+                  )))
+                : Container(
+                    alignment: Alignment.center,
+                    child: const CircularProgressIndicator(
+                      color: Colors.deepOrange,
+                    ),
+                  ),
+          );
         });
   }
 }
