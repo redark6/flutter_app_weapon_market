@@ -20,7 +20,10 @@ class UserAnnounceItem extends StatelessWidget {
     return SizedBox(
       height: double.infinity,
       child: GestureDetector(
-        onTap: () =>  Navigator.push(context,MaterialPageRoute(builder: (context) => AnnounceScreen(announce: announce))),
+        onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => AnnounceScreen(announce: announce))),
         child: Card(
           semanticContainer: true,
           clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -41,8 +44,13 @@ class UserAnnounceItem extends StatelessWidget {
                             ? Image.network(
                                 announce.image,
                                 fit: BoxFit.fill,
+                                height: 130,
                               )
-                            : Image.memory(base64.decode(announce.image)),
+                            : Image.memory(
+                                base64.decode(announce.image),
+                                fit: BoxFit.fill,
+                                height: 130,
+                              ),
                       ),
                     ),
                   ),
