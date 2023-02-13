@@ -8,6 +8,8 @@ import 'package:full_screen_image_null_safe/full_screen_image_null_safe.dart';
 import 'package:weapon_marketplace/services/date_service.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:weapon_marketplace/views/screens/user_announce.dart';
+import 'package:weapon_marketplace/views/widgets/user_announce_item.dart';
 
 import '../../models/announce.dart';
 import '../../models/user.dart';
@@ -167,7 +169,7 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const SignupScreen()));
+                                                    UserAnnounceScreen(userId: snapshot.data!.userId)));
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.only(
