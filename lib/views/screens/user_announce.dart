@@ -76,7 +76,7 @@ class _UserAnnounceScreenState extends State<UserAnnounceScreen> {
                             ),
                             Padding(
                               padding: const EdgeInsets.only(left: 10),
-                              child: Text(user?.username ?? "nique ta mere",
+                              child: Text(user.username,
                                   style: const TextStyle(color: Colors.black, fontSize: 20.0,fontWeight: FontWeight.bold)
                               ),
                             )
