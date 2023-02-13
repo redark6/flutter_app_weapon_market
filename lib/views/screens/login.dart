@@ -51,7 +51,6 @@ class _LoginScreenState extends State<LoginScreen> {
     return SafeArea(
         child: Scaffold(
           resizeToAvoidBottomInset : false,
-
           appBar: AppBar(
             backgroundColor: Colors.black87,
             automaticallyImplyLeading: false,

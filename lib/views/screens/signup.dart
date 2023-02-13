@@ -29,7 +29,20 @@ class _SignupScreenState extends State<SignupScreen> {
   final AnnounceService announceService = AnnounceService();
   File? imageFile;
   String? username, password, email;
+  String? validateEmail(String? value) {
+    const pattern = r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'"
+        r'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-'
+        r'\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*'
+        r'[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4]'
+        r'[0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9]'
+        r'[0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\'
+        r'x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])';
+    final regex = RegExp(pattern);
 
+    return value!.isNotEmpty && !regex.hasMatch(value)
+        ? 'Enter a valid email address'
+        : null;
+  }
   _getFromGallery() async {
     PickedFile? pickedFile = await ImagePicker().getImage(
       source: ImageSource.gallery,
@@ -49,6 +62,7 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+          resizeToAvoidBottomInset : false,
           appBar: AppBar(
             backgroundColor: Colors.black87,
             automaticallyImplyLeading: false,
@@ -90,6 +104,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                 child: TextFormField(
                                   controller: usernameEditingController,
                                   cursorColor: Colors.deepOrange,
+                                  textInputAction: TextInputAction.next,
                                   decoration: InputDecoration(
                                     prefixIcon: const Icon(Icons.person),
                                     hintText: "Nom d'utilisateur",
@@ -120,6 +135,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                 child: TextFormField(
                                   controller: emailEditingController,
                                   cursorColor: Colors.deepOrange,
+                                  textInputAction: TextInputAction.next,
                                   decoration: InputDecoration(
                                     prefixIcon: const Icon(Icons.mail),
                                     hintText: "Email",
@@ -139,7 +155,9 @@ class _SignupScreenState extends State<SignupScreen> {
                                   // The validator receives the text that the user has entered.
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'Please enter some text';
+                                      return 'Le champ est requis';
+                                    } else if (validateEmail(value) != null){
+                                      return 'Le champ doit être un email';
                                     }
                                     return null;
                                   },
@@ -150,6 +168,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                 child: TextFormField(
                                   controller: passwordEditingController,
                                   cursorColor: Colors.deepOrange,
+                                  textInputAction: TextInputAction.done,
                                   decoration: InputDecoration(
                                     prefixIcon: const Icon(Icons.lock),
                                     hintText: "Mot de passe",
