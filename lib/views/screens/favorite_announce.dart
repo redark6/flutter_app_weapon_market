@@ -54,14 +54,18 @@ class _FavoriteAnnounceScreenState extends State<FavoriteAnnounceScreen> {
                         centerTitle: false,
                         elevation: 2,
                       ) : null,
-                      body:           ListView(
+                      body:  snapshot.data!.isEmpty == false ? ListView(
                         children: [
                           for (var itemPost
                           in snapshot.data as List<Announce>)
                             FavoriteItem(announce: itemPost, callback: (val) => setState(() => {})),
                         ],
-                      )
-                  )
+                      ) :
+                      const Padding(
+                          padding: EdgeInsets.only(top: 50, bottom: 50, left: 20, right: 20),
+                        child: Text("Vous n'avez pas de favoris, pour en ajouter un cliquez sur l'étoile dans une annonce")
+                      ),
+                  ),
               )
               : Container(
               alignment: Alignment.center,
