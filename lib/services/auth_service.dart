@@ -81,6 +81,7 @@ class AuthService {
         'username': user.username,
         'password': user.password,
         'email': user.email,
+        'phone': user.phone,
       }),
     );
 

@@ -20,8 +20,6 @@ class _ProfilScreenState extends State<ProfilScreen> {
   @override
   Widget build(BuildContext context) {
     final User? user = authService.getCurrentUser();
-    print(user!.profilePictureUrl);
-    print("dvdvdvx");
 
     return SafeArea(
       child: Scaffold(
