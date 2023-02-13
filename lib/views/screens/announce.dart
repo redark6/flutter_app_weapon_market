@@ -8,6 +8,7 @@ import 'package:weapon_marketplace/services/date_service.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:weapon_marketplace/views/screens/user_announce.dart';
+import 'package:maps_launcher/maps_launcher.dart';
 
 import '../../models/announce.dart';
 import '../../models/user.dart';
@@ -37,8 +38,6 @@ class AnnounceScreen extends StatefulWidget {
 }
 
 class _AnnounceScreenState extends State<AnnounceScreen> {
-
-
   DateService dateService = DateService();
   late Future<Announce?> announce;
   AnnounceService announceService = AnnounceService();
@@ -82,13 +81,15 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
                             ),
                             onPressed: () {
                               if (snapshot.data![0].favorite == false) {
-                                announceService.addFavorite(snapshot.data![0].id,
-                                    authService.getCurrentUser()!.id).then((value) => setState(() {}));
+                                announceService
+                                    .addFavorite(snapshot.data![0].id,
+                                        authService.getCurrentUser()!.id)
+                                    .then((value) => setState(() {}));
                               } else {
-                                announceService.deleteFavorite(
-                                    snapshot.data![0].id,
-                                    authService.getCurrentUser()!.id).then((value) => setState(() {}));
-
+                                announceService
+                                    .deleteFavorite(snapshot.data![0].id,
+                                        authService.getCurrentUser()!.id)
+                                    .then((value) => setState(() {}));
                               }
                             },
                           ),
@@ -158,7 +159,9 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    UserAnnounceScreen(userId: snapshot.data![0].userId)));
+                                                    UserAnnounceScreen(
+                                                        userId: snapshot
+                                                            .data![0].userId)));
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.only(
@@ -171,8 +174,11 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
                                             ClipRRect(
                                               borderRadius:
                                                   BorderRadius.circular(140),
-                                              child: snapshot.data![1] == null ||
-                                                      snapshot.data![1].profilePictureUrl
+                                              child: snapshot.data![1] ==
+                                                          null ||
+                                                      snapshot
+                                                          .data![1]
+                                                          .profilePictureUrl
                                                           .isEmpty
                                                   ? Image.asset(
                                                       'lib/assets/images/no_image.jpeg',
@@ -180,7 +186,8 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
                                                       height: 70,
                                                       fit: BoxFit.cover)
                                                   : Image.memory(
-                                                      base64.decode(snapshot.data![1]
+                                                      base64.decode(snapshot
+                                                          .data![1]
                                                           .profilePictureUrl),
                                                       width: 70,
                                                       height: 70,
@@ -245,10 +252,14 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(left: 10),
-                                    child: Text(
-                                      snapshot.data![0].location,
-                                      style: const TextStyle(
-                                          color: Colors.black, fontSize: 14.0),
+                                    child: GestureDetector(
+                                      onTap: () => {MapsLauncher.launchQuery(snapshot.data![0].location)},
+                                      child: Text(
+                                        snapshot.data![0].location,
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14.0),
+                                      ),
                                     ),
                                   ),
                                 ],
