@@ -92,6 +92,7 @@ class AuthService {
         Uri.parse("${apiUrl}users/$userId/add-image/"),);
       request.files.add(await http.MultipartFile.fromPath('image', image.path));
       request.send();
+      await logIn(SignIn(username: user.username, password: user.password));
     }
     return response;
   }
@@ -120,32 +121,6 @@ class AuthService {
     return response;
   }
 
-  Future<http.StreamedResponse> uploadPp(File file) async {
-    String token = "";
-    token = await SecureStorageService.getInstance()
-        .get("token")
-        .then((value) => token = value.toString());
-
-    var request = http.MultipartRequest(
-      'POST',
-      Uri.parse(
-        '${apiUrl}users/profile-picture',
-      ),
-    );
-
-
-    request.files.add(http.MultipartFile('image',
-        File(file.path).readAsBytes().asStream(), File(file.path).lengthSync(),
-        filename: file.path.split("/").last));
-    request.headers['cookie'] = token;
-    var res = await request.send().then((response) {
-      if(response.statusCode == 200) {
-        /*  AuthService.currentUser!.user.profilePictureUrl = dotenv.env["BUCKET_NAME"].toString();
-        AuthService.currentUser!.user.profilePictureName = file.path.split("/").last; */
-      }
-    });
-    return res;
-  }
 
   static void setCurrentUser(User? user) {
     currentUser = user;
