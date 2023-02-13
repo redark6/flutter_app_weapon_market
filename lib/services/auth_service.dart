@@ -91,6 +91,7 @@ class AuthService {
       var request = http.MultipartRequest('POST',
         Uri.parse("${apiUrl}users/$userId/add-image/"),);
       request.files.add(await http.MultipartFile.fromPath('image', image.path));
+      request.send();
     }
     return response;
   }
