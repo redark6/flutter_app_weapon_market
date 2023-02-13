@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:weapon_marketplace/models/sign_up.dart';
@@ -151,5 +152,9 @@ class AuthService {
 
   bool isLoggedIn() {
     return currentUser != null;
+  }
+
+  void logout() {
+    currentUser = null;
   }
 }

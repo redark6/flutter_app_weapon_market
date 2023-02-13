@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:weapon_marketplace/services/auth_service.dart';
+import 'package:weapon_marketplace/views/screens/login.dart';
 import 'package:weapon_marketplace/views/screens/profil.dart';
 import 'package:weapon_marketplace/views/screens/signup.dart';
 import '../../models/user.dart';
@@ -212,10 +213,11 @@ class _AccountScreenState extends State<AccountScreen> {
                             backgroundColor: Colors.black,
                           ),
                           onPressed: () {
+                            authService.logout();
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const SignupScreen()));
+                                    builder: (context) => const LoginScreen()));
                           },
                           child: const Padding(
                             padding: EdgeInsets.only(top: 15,bottom: 15,left: 10, right: 10),
