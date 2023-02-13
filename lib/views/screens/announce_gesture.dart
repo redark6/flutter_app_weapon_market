@@ -7,7 +7,6 @@ import '../../models/search.dart';
 import '../../models/user.dart';
 import '../widgets/announce_gesture_item.dart';
 
-
 class AnnounceGestureScreen extends StatefulWidget {
   const AnnounceGestureScreen({
     Key? key,
@@ -18,10 +17,7 @@ class AnnounceGestureScreen extends StatefulWidget {
 }
 
 class _AnnounceGestureScreenState extends State<AnnounceGestureScreen> {
-
-  set callback(int value) => setState(() => {
-
-  });
+  set callback(int value) => setState(() => {});
 
   AnnounceService announceService = AnnounceService();
   AuthService authService = AuthService();
@@ -30,47 +26,55 @@ class _AnnounceGestureScreenState extends State<AnnounceGestureScreen> {
   @override
   Widget build(BuildContext context) {
     final User? user = authService.getCurrentUser();
-    userAnnounces = announceService.getAnnounces(Search(null, null, null, null, user != null ? user.id : 0));
-
+    userAnnounces = announceService.getAnnounces(
+        Search(null, null, null, null, user != null ? user.id : 0));
 
     return FutureBuilder(
         future: userAnnounces,
-        builder: (BuildContext context,
-            AsyncSnapshot<List<Announce>> snapshot) {
+        builder:
+            (BuildContext context, AsyncSnapshot<List<Announce>> snapshot) {
           return snapshot.data != null
-              ?
-          SafeArea(
-              child: Scaffold(
-                  appBar: AppBar(
-                    backgroundColor: Colors.black87,
-                    automaticallyImplyLeading: false,
-                    leading: IconButton(
-                      icon: const Icon(
-                        Icons.arrow_back_sharp,
-                        size: 30,
+              ? SafeArea(
+                  child: Scaffold(
+                    appBar: AppBar(
+                      backgroundColor: Colors.black87,
+                      automaticallyImplyLeading: false,
+                      leading: IconButton(
+                        icon: const Icon(
+                          Icons.arrow_back_sharp,
+                          size: 30,
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
                       ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
+                      centerTitle: false,
+                      elevation: 2,
                     ),
-                    centerTitle: false,
-                    elevation: 2,
+                    body: snapshot.data!.isEmpty == false
+                        ? ListView(
+                            children: [
+                              for (var itemPost
+                                  in snapshot.data as List<Announce>)
+                                AnnounceGestureItem(
+                                  announce: itemPost,
+                                  callback: (val) => setState(() => {}),
+                                ),
+                            ],
+                          )
+                        : const Padding(
+                            padding: EdgeInsets.only(
+                                top: 50, bottom: 50, left: 20, right: 20),
+                            child: Text(
+                                "Vous n'avez pas d'annonces, pour en ajouter une cliquez sur le + en bas de votre écran dans votre compte")),
                   ),
-                  body:           ListView(
-                    children: [
-                      for (var itemPost
-                      in snapshot.data as List<Announce>)
-                        AnnounceGestureItem(announce: itemPost, callback: (val) => setState(() => {})),
-                    ],
-                  )
-              )
-          )
+                )
               : Container(
-              alignment: Alignment.center,
-              child: const CircularProgressIndicator(
-                color: Colors.deepOrange,
-              ));
+                  alignment: Alignment.center,
+                  child: const CircularProgressIndicator(
+                    color: Colors.deepOrange,
+                  ),
+                );
         });
-
   }
 }
