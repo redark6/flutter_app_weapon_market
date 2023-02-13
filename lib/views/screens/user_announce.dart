@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:full_screen_image_null_safe/full_screen_image_null_safe.dart';
 import 'package:weapon_marketplace/models/announce.dart';
 import 'package:weapon_marketplace/services/auth_service.dart';
 
@@ -59,25 +58,25 @@ class _UserAnnounceScreenState extends State<UserAnnounceScreen> {
                       Padding(
                         padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10),
                         child: Row(
-                          children:  [
-                            SizedBox(
-                              height: 300,
-                              width: double.infinity,
-                              child: FittedBox(
-                                fit: BoxFit.fitHeight,
-                                child:
-                                FullScreenWidget(
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(3.0),
-                                    child: user!.profilePictureUrl.isEmpty ?
-                                  Image.asset('lib/assets/images/no_image.jpeg'):  Image.memory(base64.decode(user.profilePictureUrl)),
-                                  ),
-                                ),
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(240),
+                              child: user!.profilePictureUrl.isEmpty
+                                  ? Image.asset(
+                                ('lib/assets/images/no_image.jpeg'),
+                                width: 80,
+                                height: 80,
+                                fit: BoxFit.fill,)
+                                  : Image.memory(
+                                  base64.decode(user.profilePictureUrl),
+                                  width: 80,
+                                  height: 80,
+                                  fit: BoxFit.fill
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(left: 10),
-                              child: Text(user.username,
+                              child: Text(user?.username ?? "nique ta mere",
                                   style: const TextStyle(color: Colors.black, fontSize: 20.0,fontWeight: FontWeight.bold)
                               ),
                             )
@@ -89,7 +88,7 @@ class _UserAnnounceScreenState extends State<UserAnnounceScreen> {
                         child: GridView.count(
                           crossAxisCount: 2,
                           childAspectRatio: MediaQuery.of(context).size.width /
-                              (MediaQuery.of(context).size.height / 1.3),
+                              (MediaQuery.of(context).size.height / 1.6),
                           children: [
                             for (var itemPost
                             in snapshot.data as List<Announce>)

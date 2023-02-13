@@ -11,7 +11,7 @@ import '../models/search.dart';
 
 
 class AnnounceService {
-  static String apiUrl = "https://192.168.3.2:8443/";
+  static String apiUrl = "https://192.168.161.218:8443/";
 
   AnnounceService();
   AuthService authService = AuthService();

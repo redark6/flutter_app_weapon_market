@@ -52,7 +52,7 @@ class Announce {
       username: json['username'] as String? ?? '',
       profilePictureUrl:  '',
       phone: json['phone'] as String? ?? '',
-      favorite: json['favorite'] as bool,
+      favorite: json['favorite'] as bool ?? false,
     );
   }
 
