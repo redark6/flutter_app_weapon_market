@@ -3,13 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:weapon_marketplace/services/announce_service.dart';
 import 'package:weapon_marketplace/services/auth_service.dart';
-import 'package:weapon_marketplace/views/screens/signup.dart';
 import 'package:full_screen_image_null_safe/full_screen_image_null_safe.dart';
 import 'package:weapon_marketplace/services/date_service.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:weapon_marketplace/views/screens/user_announce.dart';
-import 'package:weapon_marketplace/views/widgets/user_announce_item.dart';
 
 import '../../models/announce.dart';
 import '../../models/user.dart';

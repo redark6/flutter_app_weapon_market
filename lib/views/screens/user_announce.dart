@@ -20,6 +20,7 @@ class UserAnnounceScreen extends StatefulWidget {
 
 class _UserAnnounceScreenState extends State<UserAnnounceScreen> {
   late Future<List<Announce>> userAnnounces;
+  late Future<User> user;
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +28,11 @@ class _UserAnnounceScreenState extends State<UserAnnounceScreen> {
     AuthService authService = AuthService();
     userAnnounces = announceService
         .getAnnounces(Search(null, null, null, null, widget.userId));
-    User? user = authService.getCurrentUser();
+    user =  authService.getUserById(widget.userId);
     return FutureBuilder(
-        future: userAnnounces,
+        future:  Future.wait([userAnnounces, user]),
         builder:
-            (BuildContext context, AsyncSnapshot<List<Announce>> snapshot) {
+            (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
           return snapshot.data != null
               ? SafeArea(
                   child: Scaffold(
@@ -59,7 +60,7 @@ class _UserAnnounceScreenState extends State<UserAnnounceScreen> {
                             children: [
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(240),
-                                child: user!.profilePictureUrl.isEmpty
+                                child: snapshot.data![1].profilePictureUrl.isEmpty
                                     ? Image.asset(
                                         ('lib/assets/images/no_image.jpeg'),
                                         width: 80,
@@ -67,14 +68,14 @@ class _UserAnnounceScreenState extends State<UserAnnounceScreen> {
                                         fit: BoxFit.fill,
                                       )
                                     : Image.memory(
-                                        base64.decode(user.profilePictureUrl),
+                                        base64.decode(snapshot.data![1].profilePictureUrl),
                                         width: 80,
                                         height: 80,
                                         fit: BoxFit.fill),
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 10),
-                                child: Text(user.username,
+                                child: Text(snapshot.data![1].username,
                                     style: const TextStyle(
                                         color: Colors.black,
                                         fontSize: 20.0,
@@ -83,7 +84,7 @@ class _UserAnnounceScreenState extends State<UserAnnounceScreen> {
                             ],
                           ),
                         ),
-                        snapshot.data!.isEmpty == false
+                        snapshot.data![0].isEmpty == false
                             ? Expanded(
                                 // The ListView
                                 child: GridView.count(
@@ -94,7 +95,7 @@ class _UserAnnounceScreenState extends State<UserAnnounceScreen> {
                                               1.6),
                                   children: [
                                     for (var itemPost
-                                        in snapshot.data as List<Announce>)
+                                        in snapshot.data![0] as List<Announce>)
                                       UserAnnounceItem(announce: itemPost),
                                   ],
                                 ),
