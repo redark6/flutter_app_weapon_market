@@ -13,6 +13,7 @@ class AuthService {
   static String apiUrl = "https://192.168.161.218:8443/";
   static User? currentUser;
   static String? photo;
+  bool isLogged = false;
 
   AuthService();
 
@@ -59,6 +60,9 @@ class AuthService {
       int end = source.indexOf(";", start);
       String extracted = source.substring(start, end);
       SecureStorageService.getInstance().set("token", extracted);
+      if(extracted.isNotEmpty) {
+        isLogged = true;
+      }
     }
 
 
@@ -151,10 +155,11 @@ class AuthService {
   }
 
   bool isLoggedIn() {
-    return currentUser != null;
+    return isLogged;
   }
 
   void logout() {
+    isLogged = false;
     currentUser = null;
   }
 }

@@ -147,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   onPressed: () {
                                     authService.logIn(SignIn(username: usernameEditingController.text, password: passwordEditingController.text)).whenComplete(() =>
                                     {
-                                      if(authService.isLoggedIn()) {
+                                      if(authService.isLoggedIn() == true) {
                                             Navigator.push(context,MaterialPageRoute(builder: (context) => const MainScreen()))
                                       }
                                     });
