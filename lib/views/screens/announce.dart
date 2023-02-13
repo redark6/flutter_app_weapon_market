@@ -37,30 +37,21 @@ class AnnounceScreen extends StatefulWidget {
 }
 
 class _AnnounceScreenState extends State<AnnounceScreen> {
-  AuthService authService = AuthService();
-  User? user;
 
-  getUser(userId) async {
-    if (user != null) {
-      return;
-    }
-    var us = await authService.getUserById(userId);
-    setState(() {
-      user = us;
-    });
-  }
 
   DateService dateService = DateService();
   late Future<Announce?> announce;
   AnnounceService announceService = AnnounceService();
+  late Future<User?> user;
+  AuthService authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
     announce = announceService.findAnnounce(widget.announce.id);
-    getUser(widget.announce.userId);
+    user = authService.getUserById(widget.announce.userId);
     return FutureBuilder(
-        future: announce,
-        builder: (BuildContext context, AsyncSnapshot<Announce?> snapshot) {
+        future: Future.wait([announce, user]),
+        builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
           return snapshot.data != null
               ? SafeArea(
                   child: Scaffold(
@@ -81,21 +72,21 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
                           padding: const EdgeInsets.only(right: 15),
                           child: IconButton(
                             icon: Icon(
-                              snapshot.data!.favorite == false
+                              snapshot.data![0].favorite == false
                                   ? Icons.star_border
                                   : Icons.star,
-                              color: snapshot.data!.favorite == false
+                              color: snapshot.data![0].favorite == false
                                   ? Colors.white
                                   : Colors.deepOrange,
                               size: 30,
                             ),
                             onPressed: () {
-                              if (snapshot.data!.favorite == false) {
-                                announceService.addFavorite(snapshot.data!.id,
+                              if (snapshot.data![0].favorite == false) {
+                                announceService.addFavorite(snapshot.data![0].id,
                                     authService.getCurrentUser()!.id).then((value) => setState(() {}));
                               } else {
                                 announceService.deleteFavorite(
-                                    snapshot.data!.id,
+                                    snapshot.data![0].id,
                                     authService.getCurrentUser()!.id).then((value) => setState(() {}));
 
                               }
@@ -117,18 +108,18 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
                             child: FittedBox(
                               fit: BoxFit.fitHeight,
                               child: FullScreenWidget(
-                                child: snapshot.data!.image.isEmpty
+                                child: snapshot.data![0].image.isEmpty
                                     ? Image.asset(
                                         'lib/assets/images/no_image.jpeg')
                                     : Image.memory(
-                                        base64.decode(snapshot.data!.image)),
+                                        base64.decode(snapshot.data![0].image)),
                               ),
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 30),
                             child: Text(
-                              snapshot.data!.name,
+                              snapshot.data![0].name,
                               style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 20.0,
@@ -138,7 +129,7 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
                           Padding(
                             padding: const EdgeInsets.only(top: 15),
                             child: Text(
-                              '${snapshot.data!.price}€',
+                              '${snapshot.data![0].price}€',
                               style: const TextStyle(
                                   color: Colors.deepOrange,
                                   fontSize: 16.0,
@@ -148,7 +139,7 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
                           Padding(
                             padding: const EdgeInsets.only(top: 15),
                             child: Text(
-                              dateService.formatDate(snapshot.data!.date),
+                              dateService.formatDate(snapshot.data![0].date),
                               style: const TextStyle(
                                   color: Colors.black, fontSize: 16.0),
                             ),
@@ -167,7 +158,7 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    UserAnnounceScreen(userId: snapshot.data!.userId)));
+                                                    UserAnnounceScreen(userId: snapshot.data![0].userId)));
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.only(
@@ -180,8 +171,8 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
                                             ClipRRect(
                                               borderRadius:
                                                   BorderRadius.circular(140),
-                                              child: user == null ||
-                                                      user!.profilePictureUrl
+                                              child: snapshot.data![1] == null ||
+                                                      snapshot.data![1].profilePictureUrl
                                                           .isEmpty
                                                   ? Image.asset(
                                                       'lib/assets/images/no_image.jpeg',
@@ -189,7 +180,7 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
                                                       height: 70,
                                                       fit: BoxFit.cover)
                                                   : Image.memory(
-                                                      base64.decode(user!
+                                                      base64.decode(snapshot.data![1]
                                                           .profilePictureUrl),
                                                       width: 70,
                                                       height: 70,
@@ -198,7 +189,7 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
                                             ),
                                             const SizedBox(width: 10),
                                             Text(
-                                              snapshot.data!.username,
+                                              snapshot.data![0].username,
                                               style:
                                                   const TextStyle(fontSize: 20),
                                             ),
@@ -228,7 +219,7 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
                           Padding(
                             padding: const EdgeInsets.only(top: 15),
                             child: Text(
-                              snapshot.data!.content,
+                              snapshot.data![0].content,
                               style: const TextStyle(
                                   color: Colors.black, fontSize: 14.0),
                             ),
@@ -255,7 +246,7 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
                                   Padding(
                                     padding: const EdgeInsets.only(left: 10),
                                     child: Text(
-                                      snapshot.data!.location,
+                                      snapshot.data![0].location,
                                       style: const TextStyle(
                                           color: Colors.black, fontSize: 14.0),
                                     ),
@@ -276,7 +267,7 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
                                         ),
                                         onPressed: () async {
                                           widget._callNumber(
-                                              snapshot.data!.phone);
+                                              snapshot.data![0].phone);
                                         },
                                         child: Padding(
                                             padding: const EdgeInsets.only(
@@ -308,14 +299,14 @@ class _AnnounceScreenState extends State<AnnounceScreen> {
                                         onPressed: () {
                                           final Uri emailLaunchUri = Uri(
                                             scheme: 'mailto',
-                                            path: snapshot.data!.email,
+                                            path: snapshot.data![0].email,
                                             query: widget
                                                 .encodeQueryParameters(<String,
                                                     String>{
                                               'subject':
                                                   'A propos de votre annonce',
                                               'body':
-                                                  "Bonjour, votre annonce : \"${snapshot.data!.name}\" est elle toujours disponible ?"
+                                                  "Bonjour, votre annonce : \"${snapshot.data![0].name}\" est elle toujours disponible ?"
                                             }),
                                           );
 
